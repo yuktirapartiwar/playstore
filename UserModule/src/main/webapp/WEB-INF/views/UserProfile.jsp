@@ -7,6 +7,7 @@
     <title>User Profile - PlayStore</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Styles for the user profile page -->
     <style>
         body {
             background-color: #f8f9fa;
@@ -53,6 +54,7 @@
     </style>
 </head>
 <body>
+    <!-- Navigation bar for user pages -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">PlayStore</a>
@@ -82,11 +84,13 @@
     </nav>
 
     <div class="container">
+        <!-- User profile information card -->
         <div class="card">
             <div class="card-header">
                 <h2 class="mb-0">User Profile</h2>
             </div>
             <div class="card-body">
+                <!-- Form for displaying and editing user profile information -->
                 <form id="profileForm" action="/user/profile/update" method="post">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
@@ -100,18 +104,21 @@
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" name="password" value="${user.password}" readonly>
                     </div>
+                    <!-- Buttons for editing and saving profile information -->
                     <button type="button" class="btn btn-primary" id="editBtn">Edit</button>
                     <button type="submit" class="btn btn-success" id="saveBtn" style="display:none;">Save</button>
                 </form>
+                <!-- Button for deleting the user account -->
                 <a href="/user/profile/delete" class="btn btn-danger mt-3">Delete Account</a>
             </div>
         </div>
     </div>
-
+    <!-- Footer section -->
     <div class="footer">
         <p>&copy; 2024 PlayStore. All Rights Reserved.</p>
     </div>
 
+    <!-- JavaScript for handling profile editing functionality -->
     <script>
         document.getElementById("editBtn").onclick = function() {
             document.getElementById("username").removeAttribute("readonly");
@@ -120,7 +127,8 @@
             document.getElementById("editBtn").style.display = "none";
             document.getElementById("saveBtn").style.display = "inline-block";
         };
-    </script>
+    </script> 
+    <!-- Bootstrap JS bundle -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

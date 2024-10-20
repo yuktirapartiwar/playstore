@@ -8,6 +8,7 @@
     <title>Admin Profile - PlayStore</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Styles for the admin profile page -->
     <style>
         body {
             background-color: #f8f9fa;
@@ -53,6 +54,7 @@
         }
     </style>
 </head>
+<!-- Navigation bar for admin pages -->
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
@@ -82,11 +84,13 @@
         </div>
     </nav>
 
+    <!-- Admin profile information card -->
     <div class="container">
         <div class="card">
             <div class="card-header">
                 <h2 class="mb-0">Admin Profile</h2>
             </div>
+            <!-- Form for displaying and editing admin profile information -->
             <div class="card-body">
                 <form id="profileForm" action="/admin/profile/update" method="post">
                     <% Admin admin = (Admin)request.getSession(false).getAttribute("Admin"); %>
@@ -106,23 +110,26 @@
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" name="password" value="<%=admin.getPassword()%>" readonly>
                     </div>
+                    <!-- Buttons for editing and saving profile information -->
                     <div class="d-flex justify-content-between">
                         <button type="button" class="btn btn-primary" id="editBtn">Edit Profile</button>
                         <button type="submit" class="btn btn-success" id="saveBtn" style="display:none;">Save Changes</button>
                     </div>
                 </form>
+                <!-- Button for deleting the admin account -->
                 <div class="mt-3">
                     <a href="/admin/profile/delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.')">Delete Account</a>
                 </div>
             </div>
         </div>
     </div>
-
+    <!-- Footer section -->
     <div class="footer">
         <p>&copy; 2024 PlayStore. All Rights Reserved.</p>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript for handling profile editing functionality -->
     <script>
         const form = document.getElementById('profileForm');
         const editBtn = document.getElementById('editBtn');

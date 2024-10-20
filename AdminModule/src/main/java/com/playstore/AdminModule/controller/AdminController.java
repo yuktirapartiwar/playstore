@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.playstore.AdminModule.DTO.AdminDTO;
 import com.playstore.AdminModule.model.Admin;
 import com.playstore.AdminModule.service.AdminService;
 
@@ -117,22 +116,9 @@ public class AdminController {
 				session.invalidate();
 				return "redirect:/admin/login";
 			}
-	//	}
-	//	session.invalidate();
-		
-//.	return "redirect:/admin/login";
 	
 }
 
-//	private AdminDTO convertToDTO(Admin admin) {
-//		AdminDTO adminDTO = new AdminDTO();
-//		adminDTO.setId(admin.getId());
-//		adminDTO.setUsername(admin.getUsername());
-//		adminDTO.setEmail(admin.getEmail());
-//		adminDTO.setPassword(admin.getPassword());
-//		adminDTO.setRole(admin.getRole());
-//		return adminDTO;
-//	}
 
 
 
