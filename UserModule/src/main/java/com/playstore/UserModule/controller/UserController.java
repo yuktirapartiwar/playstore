@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.playstore.UserModule.model.User;
 import com.playstore.UserModule.service.UserService;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/user")
@@ -33,13 +31,8 @@ public class UserController {
 	
 	@PostMapping("/register")
 	public String registerUser(@ModelAttribute("User") User user, Model model) {
-		try {
 			userService.register(user);
-			return "redirect:/user/login";
-		} catch (Exception e) {
-			model.addAttribute("errorMessage", "Registration failed. Please try again.");
-			return "UserRegistration";
-		}
+			return "UserLogin";
 	}
 
 	
@@ -50,14 +43,11 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public String loginUser(@ModelAttribute("User") User user, Model model, HttpServletRequest request) {
+	public String loginUser(@ModelAttribute("User") User user, Model model) {
 		Optional<User> loginUser = userService.login(user.getEmail(), user.getPassword());
 		if (loginUser.isPresent()) {
-			HttpSession session = request.getSession();
-			session.setAttribute("User", loginUser.get());
-			return "redirect:/user/home";
+			return "UserHome";
 		} else {
-			model.addAttribute("errorMessage", "Invalid email or password.");
 			return "UserLogin";
 		}
 	}
