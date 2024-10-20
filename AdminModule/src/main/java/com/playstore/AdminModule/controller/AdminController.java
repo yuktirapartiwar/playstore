@@ -39,20 +39,20 @@ public class AdminController {
 	}
 
 	@GetMapping("/login")
-	public String showLoginForm(Model model, HttpSession session) {
+	public String showLoginForm(Model model, HttpServletRequest request) {
 		model.addAttribute("Admin", new Admin());
 		return "AdminLogin";
 	}
 
 	@PostMapping("/login")
-	public String loginAdmin(@ModelAttribute("Admin") Admin admin, HttpSession session) {
+	public String loginAdmin(@ModelAttribute("Admin") Admin admin, HttpServletRequest request) {
 		Optional<Admin> loginAdmin = adminService.login(admin.getEmail(), admin.getPassword());
 		if (loginAdmin.isPresent()) {
 			HttpSession session = request.getSession();
 			session.setAttribute("Admin", loginAdmin.get());
 			return "redirect:/admin/home";
 		} else {
-			session.setAttribute("errorMessage", "Invalid email or password.");
+			request.setAttribute("errorMessage", "Invalid email or password.");
 			return "redirect:/admin/login";
 		}
 	}

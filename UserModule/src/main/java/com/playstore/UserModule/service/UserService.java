@@ -14,8 +14,7 @@ public class UserService {
 	UserRepository userRepository;
 	
 	public User register(User user) {
-		userRepository.save(user);
-		return user;
+		return userRepository.save(user);
 	}
 	
 	public Optional<User> login(String email, String password) {
@@ -26,5 +25,11 @@ public class UserService {
 		return Optional.empty();
 	}
 	
+	public void update(User user) {
+		userRepository.save(user);
+	}
 	
+	public void delete(User user) {
+		userRepository.delete(user);
+	}
 }
