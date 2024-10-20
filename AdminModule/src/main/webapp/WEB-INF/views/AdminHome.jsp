@@ -1,30 +1,61 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Home</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home - PlayStore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #f0f2f5;
-            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .navbar {
+            background-color: #007bff;
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            border-radius: 15px 15px 0 0;
+            padding: 20px;
+        }
+        .card-body {
+            padding: 30px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
         }
         .footer {
-             position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
             text-align: center;
+            margin-top: 50px;
+            padding: 20px 0;
+            background-color: #f8f9fa;
+            color: #6c757d;
         }
     </style>
 </head>
 <body>
-	 <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">PlayStore</a>
+            <a class="navbar-brand" href="#">PlayStore Admin</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -50,8 +81,17 @@
         </div>
     </nav>
 
-    <div class="container my-5">
-        <h1 class="text-center">Welcome, Admin!</h1>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">Welcome, Admin!</h2>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Admin Dashboard</h5>
+                <p class="card-text">Here you can manage applications, updates, and user accounts.</p>
+                <a href="#" class="btn btn-primary">Manage Applications</a>
+            </div>
+        </div>
     </div>
 
     <div class="footer">

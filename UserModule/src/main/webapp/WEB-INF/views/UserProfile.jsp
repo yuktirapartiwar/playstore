@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Home - PlayStore</title>
+    <title>User Profile - PlayStore</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
@@ -62,7 +62,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link" href="/user/home">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">My Apps</a>
@@ -71,7 +71,7 @@
                         <a class="nav-link" href="#">Browse</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/profile">Profile</a>
+                        <a class="nav-link active" aria-current="page" href="/user/profile">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/user/logout">Logout</a>
@@ -84,12 +84,26 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h2 class="mb-0">Welcome to PlayStore!</h2>
+                <h2 class="mb-0">User Profile</h2>
             </div>
             <div class="card-body">
-                <h5 class="card-title">Discover New Apps</h5>
-                <p class="card-text">Explore thousands of apps and games in our store.</p>
-                <a href="#" class="btn btn-primary">Browse Apps</a>
+                <form id="profileForm" action="/user/profile/update" method="post">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" value="${user.username}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="${user.email}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" value="${user.password}" readonly>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="editBtn">Edit</button>
+                    <button type="submit" class="btn btn-success" id="saveBtn" style="display:none;">Save</button>
+                </form>
+                <a href="/user/profile/delete" class="btn btn-danger mt-3">Delete Account</a>
             </div>
         </div>
     </div>
@@ -98,6 +112,15 @@
         <p>&copy; 2024 PlayStore. All Rights Reserved.</p>
     </div>
 
+    <script>
+        document.getElementById("editBtn").onclick = function() {
+            document.getElementById("username").removeAttribute("readonly");
+            document.getElementById("email").removeAttribute("readonly");
+            document.getElementById("password").removeAttribute("readonly");
+            document.getElementById("editBtn").style.display = "none";
+            document.getElementById("saveBtn").style.display = "inline-block";
+        };
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
