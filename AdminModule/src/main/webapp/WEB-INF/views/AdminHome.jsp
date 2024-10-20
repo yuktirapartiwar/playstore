@@ -7,6 +7,7 @@
     <title>Admin Home - PlayStore</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Styles for the admin home page -->
     <style>
         body {
             background-color: #f8f9fa;
@@ -53,12 +54,14 @@
     </style>
 </head>
 <body>
+    <!-- Navigation bar for admin pages -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">PlayStore Admin</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <!-- Collapsible navigation menu -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -82,10 +85,12 @@
     </nav>
 
     <div class="container">
+        <!-- Welcome message card -->
         <div class="card">
             <div class="card-header">
                 <h2 class="mb-0">Welcome, Admin!</h2>
             </div>
+            <!-- Dashboard content card -->
             <div class="card-body">
                 <h5 class="card-title">Admin Dashboard</h5>
                 <p class="card-text">Here you can manage applications, updates, and user accounts.</p>
@@ -94,10 +99,12 @@
         </div>
     </div>
 
+    <!-- Footer section -->
     <div class="footer">
         <p>&copy; 2024 PlayStore. All Rights Reserved.</p>
     </div>
 
+    <!-- Bootstrap JS bundle -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

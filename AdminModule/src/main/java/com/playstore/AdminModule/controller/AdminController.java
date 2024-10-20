@@ -29,26 +29,31 @@ public class AdminController {
 
 	@PostMapping("/register")
 	public String registerAdmin(@ModelAttribute("Admin") Admin admin, Model model) {
-		adminService.register(admin);
-		return "AdminLogin";
+		try {
+			adminService.register(admin);
+			return "redirect:/admin/login";
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "Registration failed. Please try again.");
+			return "AdminRegistration";
+		}
 	}
 
 	@GetMapping("/login")
-	public String showLoginForm(Model model) {
+	public String showLoginForm(Model model, HttpSession session) {
 		model.addAttribute("Admin", new Admin());
 		return "AdminLogin";
 	}
 
 	@PostMapping("/login")
-	public String loginAdmin(@ModelAttribute("Admin") Admin admin, Model model, HttpServletRequest request) {
+	public String loginAdmin(@ModelAttribute("Admin") Admin admin, HttpSession session) {
 		Optional<Admin> loginAdmin = adminService.login(admin.getEmail(), admin.getPassword());
 		if (loginAdmin.isPresent()) {
 			HttpSession session = request.getSession();
 			session.setAttribute("Admin", loginAdmin.get());
 			return "redirect:/admin/home";
 		} else {
-			model.addAttribute("errorMessage", "Invalid email or password.");
-			return "AdminLogin";
+			session.setAttribute("errorMessage", "Invalid email or password.");
+			return "redirect:/admin/login";
 		}
 	}
 
@@ -118,6 +123,8 @@ public class AdminController {
 			}
 	
 }
+
+
 
 
 

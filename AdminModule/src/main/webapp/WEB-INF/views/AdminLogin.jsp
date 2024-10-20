@@ -55,37 +55,42 @@
     </style>
 </head>
 <body>
-		<div class="container">
-		        <div class="card">
-		            <div class="card-header">
-		                <h2 class="mb-0">PlayStore Admin Login</h2>
-		            </div>
-		            <div class="card-body">
-		                <form action="/admin/login" method="post">
-		                    <div class="mb-3">
-		                        <label for="email" class="form-label">Email</label>
-		                        <div class="input-group">
-		                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-		                            <input type="email" id="email" name="email" class="form-control" required>
-		                        </div>
-		                    </div>
-		                    <div class="mb-3">
-		                        <label for="password" class="form-label">Password</label>
-		                        <div class="input-group">
-		                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-		                            <input type="password" id="password" name="password" class="form-control" required>
-		                        </div>
-		                    </div>
-		                    <button type="submit" class="btn btn-primary">Login</button>
-		                </form>
-		            </div>
-		        </div>
-		        <div class="footer">
-		            <p>Don't have an account? <a href="/admin/register">Register here</a></p>
-		            <p>Are you a user? <a href="http://localhost:8082/user/login">Login as User</a></p>
-		        </div>
-		    </div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header">
+				<h2 class="mb-0">PlayStore Admin Login</h2>
+			</div>
+			<div class="card-body">
+				<% if (request.getAttribute("errorMessage") != null) { %>
+					<div class="alert alert-danger" role="alert">
+						<%= request.getAttribute("errorMessage") %>
+					</div>
+				<% } %>
+				<form action="/admin/login" method="post">
+					<div class="mb-3">
+						<label for="email" class="form-label">Email</label>
+						<div class="input-group">
+							<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+							<input type="email" id="email" name="email" class="form-control" required>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="password" class="form-label">Password</label>
+						<div class="input-group">
+							<span class="input-group-text"><i class="fas fa-lock"></i></span>
+							<input type="password" id="password" name="password" class="form-control" required>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary">Login</button>
+				</form>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Don't have an account? <a href="/admin/register">Register here</a></p>
+			<p>Are you a user? <a href="http://localhost:8082/user/login">Login as User</a></p>
+		</div>
+	</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

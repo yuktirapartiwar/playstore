@@ -60,6 +60,11 @@
                 <h2 class="mb-0">PlayStore User Registration</h2>
             </div>
             <div class="card-body">
+                <% if (request.getAttribute("errorMessage") != null) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= request.getAttribute("errorMessage") %>
+                    </div>
+                <% } %>
                 <form action="/user/register" method="post">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
