@@ -66,6 +66,11 @@
 						<%= request.getAttribute("errorMessage") %>
 					</div>
 				<% } %>
+				<% if (request.getAttribute("successMessage") != null) { %>
+					<div class="alert alert-success" role="alert">
+						<%= request.getAttribute("successMessage") %>
+					</div>
+				<% } %>
 				<form action="/admin/login" method="post">
 					<div class="mb-3">
 						<label for="email" class="form-label">Email</label>

@@ -49,6 +49,10 @@ public class AdminController {
 	@GetMapping("/login")
 	public String showLoginForm(Model model, HttpServletRequest request) {
 		model.addAttribute("Admin", new Admin());
+		String message = request.getParameter("message");
+		if (message != null) {
+			model.addAttribute("successMessage", message);
+		}
 		return "AdminLogin";
 	}
 
@@ -107,34 +111,34 @@ public class AdminController {
 	@PostMapping("/profile/update")
 	public String updateProfile(@ModelAttribute("Admin") Admin admin, HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession(false);
-		if (session != null) {
+		if (session != null && session.getAttribute("Admin") != null) {
 			Admin existingAdmin = (Admin) session.getAttribute("Admin");
-			if (existingAdmin != null) {
-				admin.setId(existingAdmin.getId()); // Preserve the existing ID
-				admin.setRole(existingAdmin.getRole());
-				try {
-					adminService.update(admin);
-					session.setAttribute("Admin", admin); // Update session with new data
-					return "redirect:/admin/profile";
-				} catch (AdminUpdateFailedException e) {
-					model.addAttribute("errorMessage", e.getMessage());
-					return "AdminProfile";
-				}
+			admin.setId(existingAdmin.getId());
+			admin.setRole(existingAdmin.getRole());
+			try {
+				adminService.update(admin);
+				session.setAttribute("Admin", admin);
+				return "redirect:/admin/profile";
+			} catch (AdminAlreadyExistsException e) {
+				model.addAttribute("errorMessage", e.getMessage());
+				return "AdminProfile";
+			} catch (AdminUpdateFailedException e) {
+				model.addAttribute("errorMessage", e.getMessage());
+				return "AdminProfile";
 			}
 		}
 		return "redirect:/admin/login";
 	}
 
 	@GetMapping("/profile/delete")
-	public String deleteProfile(HttpSession session, Model model) {
-		Admin admin = (Admin) session.getAttribute("Admin");
-		if (admin != null) {
+	public String deleteProfile(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession(false);
+		if (session != null && session.getAttribute("Admin") != null) {
+			Admin admin = (Admin) session.getAttribute("Admin");
 			try {
 				adminService.delete(admin);
-				model.addAttribute("logoutMessage", "Your account has been deleted successfully.");
-				session.removeAttribute("Admin");
 				session.invalidate();
-				return "redirect:/admin/login";
+				return "redirect:/admin/login?message=Your account has been deleted successfully.";
 			} catch (AdminDeletionFailedException e) {
 				model.addAttribute("errorMessage", e.getMessage());
 				return "AdminProfile";

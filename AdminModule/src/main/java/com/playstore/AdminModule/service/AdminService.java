@@ -1,5 +1,7 @@
 package com.playstore.AdminModule.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,10 @@ public class AdminService {
 	
 //	Update Admin Profile
 	public void update(Admin admin) {
+		Optional<Admin> existingAdminWithEmail = adminRepository.findByEmail(admin.getEmail());
+		if (existingAdminWithEmail.isPresent() && !existingAdminWithEmail.get().getId().equals(admin.getId())) {
+			throw new AdminAlreadyExistsException("Admin with email " + admin.getEmail() + " already exists");
+		}
 		try {
 			adminRepository.save(admin);
 		} catch (Exception e) {

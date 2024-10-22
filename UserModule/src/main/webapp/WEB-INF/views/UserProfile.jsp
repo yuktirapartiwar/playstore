@@ -91,6 +91,11 @@
                 <h2 class="mb-0">User Profile</h2>
             </div>
             <div class="card-body">
+                <% if (request.getAttribute("errorMessage") != null) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= request.getAttribute("errorMessage") %>
+                    </div>
+                <% } %>
                 <!-- Form for displaying and editing user profile information -->
                 <form id="profileForm" action="/user/profile/update" method="post">
                     <% User user = (User)request.getSession(false).getAttribute("User"); %>

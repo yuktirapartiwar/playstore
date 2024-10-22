@@ -1,7 +1,5 @@
 package com.playstore.UserModule.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +8,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.playstore.UserModule.exception.UserAlreadyExistsException;
+import com.playstore.UserModule.exception.UserNotFoundException;
+import com.playstore.UserModule.exception.UserUpdateFailedException;
+import com.playstore.UserModule.exception.UserDeletionFailedException;
 import com.playstore.UserModule.model.User;
 import com.playstore.UserModule.service.UserService;
 
@@ -33,6 +35,9 @@ public class UserController {
 		try {
 			userService.register(user);
 			return "redirect:/user/login";
+		} catch (UserAlreadyExistsException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "UserRegistration";
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "Registration failed. Please try again.");
 			return "UserRegistration";
@@ -42,19 +47,23 @@ public class UserController {
 	@GetMapping("/login")
 	public String showLoginForm(Model model, HttpServletRequest request) {
 		model.addAttribute("User", new User());
+		String message = request.getParameter("message");
+		if (message != null) {
+			model.addAttribute("successMessage", message);
+		}
 		return "UserLogin";
 	}
 	
 	@PostMapping("/login")
-	public String loginUser(@ModelAttribute("User") User user, HttpServletRequest request) {
-		Optional<User> loginUser = userService.login(user.getEmail(), user.getPassword());
-		if (loginUser.isPresent()) {
+	public String loginUser(@ModelAttribute("User") User user, HttpServletRequest request, Model model) {
+		try {
+			User loggedInUser = userService.login(user.getEmail(), user.getPassword());
 			HttpSession userSession = request.getSession(true);
-			userSession.setAttribute("User", loginUser.get());
+			userSession.setAttribute("User", loggedInUser);
 			return "redirect:/user/home";
-		} else {
-			request.setAttribute("errorMessage", "Invalid email or password.");
-			return "redirect:/user/login";
+		} catch (UserNotFoundException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "UserLogin";
 		}
 	}
 	
@@ -88,15 +97,23 @@ public class UserController {
 	}
 	
 	@PostMapping("/profile/update")
-	public String updateProfile(@ModelAttribute("User") User user, HttpServletRequest request) {
+	public String updateProfile(@ModelAttribute("User") User user, HttpServletRequest request, Model model) {
 		HttpSession userSession = request.getSession(false);
 		if (userSession != null && userSession.getAttribute("User") != null) {
 			User existingUser = (User) userSession.getAttribute("User");
 			user.setId(existingUser.getId());
 			user.setRole(existingUser.getRole());
-			userService.update(user);
-			userSession.setAttribute("User", user);
-			return "redirect:/user/profile";
+			try {
+				userService.update(user);
+				userSession.setAttribute("User", user);
+				return "redirect:/user/profile";
+			} catch (UserAlreadyExistsException e) {
+				model.addAttribute("errorMessage", e.getMessage());
+				return "UserProfile";
+			} catch (UserUpdateFailedException e) {
+				model.addAttribute("errorMessage", e.getMessage());
+				return "UserProfile";
+			}
 		}
 		return "redirect:/user/login";
 	}
@@ -106,10 +123,14 @@ public class UserController {
 		HttpSession userSession = request.getSession(false);
 		if (userSession != null && userSession.getAttribute("User") != null) {
 			User user = (User) userSession.getAttribute("User");
-			userService.delete(user);
-			model.addAttribute("logoutMessage", "Your account has been deleted successfully.");
-			userSession.invalidate();
-			return "redirect:/user/login";
+			try {
+				userService.delete(user);
+				userSession.invalidate();
+				return "redirect:/user/login?message=Your account has been deleted successfully.";
+			} catch (UserDeletionFailedException e) {
+				model.addAttribute("errorMessage", e.getMessage());
+				return "UserProfile";
+			}
 		}
 		return "redirect:/user/login";
 	}

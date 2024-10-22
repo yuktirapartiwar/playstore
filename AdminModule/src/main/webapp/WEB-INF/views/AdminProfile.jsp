@@ -92,6 +92,11 @@
             </div>
             <!-- Form for displaying and editing admin profile information -->
             <div class="card-body">
+                <% if (request.getAttribute("errorMessage") != null) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= request.getAttribute("errorMessage") %>
+                    </div>
+                <% } %>
                 <form id="profileForm" action="/admin/profile/update" method="post">
                     <% Admin admin = (Admin)request.getSession(false).getAttribute("Admin"); %>
                     <div class="mb-3">
@@ -130,7 +135,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <!-- JavaScript for handling profile editing functionality -->
-    <script>
+    <!-- <script>
         const form = document.getElementById('profileForm');
         const editBtn = document.getElementById('editBtn');
         const saveBtn = document.getElementById('saveBtn');
@@ -147,6 +152,15 @@
                 e.preventDefault();
             }
         });
-    </script>
+    </script> -->
+    <script>
+        document.getElementById("editBtn").onclick = function() {
+            document.getElementById("username").removeAttribute("readonly");
+            document.getElementById("email").removeAttribute("readonly");
+            document.getElementById("password").removeAttribute("readonly");
+            document.getElementById("editBtn").style.display = "none";
+            document.getElementById("saveBtn").style.display = "inline-block";
+        };
+    </script> 
 </body>
 </html>

@@ -15,8 +15,6 @@ public class Admin {
 	Long id;
 	
 	String username;
-	
-	@Column(unique = true)
 	String email;
 	String password, role;
 
