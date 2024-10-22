@@ -1,5 +1,6 @@
 package com.playstore.AdminModule.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +13,12 @@ public class Admin {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
-	String username, email, password, role;
+	
+	String username;
+	
+	@Column(unique = true)
+	String email;
+	String password, role;
 
 	public Admin() {
 		super();

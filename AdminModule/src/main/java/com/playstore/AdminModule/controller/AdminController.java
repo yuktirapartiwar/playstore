@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.playstore.AdminModule.exception.AdminAlreadyExistsException;
+import com.playstore.AdminModule.exception.AdminDeletionFailedException;
+import com.playstore.AdminModule.exception.AdminNotFoundException;
+import com.playstore.AdminModule.exception.AdminUpdateFailedException;
 import com.playstore.AdminModule.model.Admin;
 import com.playstore.AdminModule.service.AdminService;
 
@@ -32,6 +37,9 @@ public class AdminController {
 		try {
 			adminService.register(admin);
 			return "redirect:/admin/login";
+		} catch (AdminAlreadyExistsException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "AdminRegistration";
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "Registration failed. Please try again.");
 			return "AdminRegistration";
@@ -45,15 +53,15 @@ public class AdminController {
 	}
 
 	@PostMapping("/login")
-	public String loginAdmin(@ModelAttribute("Admin") Admin admin, HttpServletRequest request) {
-		Optional<Admin> loginAdmin = adminService.login(admin.getEmail(), admin.getPassword());
-		if (loginAdmin.isPresent()) {
+	public String loginAdmin(@ModelAttribute("Admin") Admin admin, HttpServletRequest request, Model model) {
+		try {
+			Admin loggedInAdmin = adminService.login(admin.getEmail(), admin.getPassword());
 			HttpSession session = request.getSession();
-			session.setAttribute("Admin", loginAdmin.get());
+			session.setAttribute("Admin", loggedInAdmin);
 			return "redirect:/admin/home";
-		} else {
-			request.setAttribute("errorMessage", "Invalid email or password.");
-			return "redirect:/admin/login";
+		} catch (AdminNotFoundException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "AdminLogin";
 		}
 	}
 
@@ -88,7 +96,7 @@ public class AdminController {
 		if (session != null) {
 			Admin admin = (Admin) session.getAttribute("Admin");
 			if (admin != null) {
-				model.addAttribute("admin", admin);
+				model.addAttribute("Admin", admin);
 				return "AdminProfile";
 			}
 		}
@@ -97,16 +105,21 @@ public class AdminController {
 //	}
 
 	@PostMapping("/profile/update")
-	public String updateProfile(@ModelAttribute("Admin") Admin admin, HttpServletRequest request) {
+	public String updateProfile(@ModelAttribute("Admin") Admin admin, HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			Admin existingAdmin = (Admin) session.getAttribute("Admin");
 			if (existingAdmin != null) {
 				admin.setId(existingAdmin.getId()); // Preserve the existing ID
 				admin.setRole(existingAdmin.getRole());
-				adminService.update(admin);
-				session.setAttribute("Admin", admin); // Update session with new data
-				return "redirect:/admin/profile";
+				try {
+					adminService.update(admin);
+					session.setAttribute("Admin", admin); // Update session with new data
+					return "redirect:/admin/profile";
+				} catch (AdminUpdateFailedException e) {
+					model.addAttribute("errorMessage", e.getMessage());
+					return "AdminProfile";
+				}
 			}
 		}
 		return "redirect:/admin/login";
@@ -114,18 +127,20 @@ public class AdminController {
 
 	@GetMapping("/profile/delete")
 	public String deleteProfile(HttpSession session, Model model) {
-			Admin admin = (Admin) session.getAttribute("Admin");
+		Admin admin = (Admin) session.getAttribute("Admin");
+		if (admin != null) {
+			try {
 				adminService.delete(admin);
-				model.addAttribute("logoutMessage","You're Logout successfully.");
-				session.removeAttribute("admin");
+				model.addAttribute("logoutMessage", "Your account has been deleted successfully.");
+				session.removeAttribute("Admin");
 				session.invalidate();
 				return "redirect:/admin/login";
+			} catch (AdminDeletionFailedException e) {
+				model.addAttribute("errorMessage", e.getMessage());
+				return "AdminProfile";
 			}
-	
+		}
+		return "redirect:/admin/login";
+	}
+
 }
-
-
-
-
-
-
