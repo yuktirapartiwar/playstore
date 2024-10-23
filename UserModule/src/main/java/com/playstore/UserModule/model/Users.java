@@ -8,16 +8,16 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="user_Details")
-public class User {
+public class Users {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	String username, email, password, role;
-	public User() {
+	public Users() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public User(Long id, String username, String email, String password, String role) {
+	public Users(Long id, String username, String email, String password, String role) {
 		super();
 		this.id = id;
 		this.username = username;

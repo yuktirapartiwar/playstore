@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="com.playstore.UserModule.model.User"%>
+<%@page import="com.playstore.UserModule.model.Users"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,14 +91,20 @@
                 <h2 class="mb-0">User Profile</h2>
             </div>
             <div class="card-body">
-                <% if (request.getAttribute("errorMessage") != null) { %>
+                <%
+                if (request.getAttribute("errorMessage") != null) {
+                %>
                     <div class="alert alert-danger" role="alert">
-                        <%= request.getAttribute("errorMessage") %>
+                        <%=request.getAttribute("errorMessage")%>
                     </div>
-                <% } %>
+                <%
+                }
+                %>
                 <!-- Form for displaying and editing user profile information -->
                 <form id="profileForm" action="/user/profile/update" method="post">
-                    <% User user = (User)request.getSession(false).getAttribute("User"); %>
+                    <%
+                    Users user = (Users)request.getSession(false).getAttribute("User");
+                    %>
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" name="username" value="<%=user.getUsername()%>" readonly>
@@ -127,13 +133,51 @@
 
     <!-- JavaScript for handling profile editing functionality -->
     <script>
-        document.getElementById("editBtn").onclick = function() {
-            document.getElementById("username").removeAttribute("readonly");
-            document.getElementById("email").removeAttribute("readonly");
-            document.getElementById("password").removeAttribute("readonly");
-            document.getElementById("editBtn").style.display = "none";
-            document.getElementById("saveBtn").style.display = "inline-block";
-        };
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('jwtToken');
+            if (!token) {
+                window.location.href = '/user/login';
+                return;
+            }
+
+            fetch('/user/profile', {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+            .then(response => response.json())
+            .then(user => {
+                document.getElementById('username').value = user.username;
+                document.getElementById('email').value = user.email;
+            });
+
+            document.getElementById('profileForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const updatedUser = {
+                    username: document.getElementById('username').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value
+                };
+
+                fetch('/user/profile/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify(updatedUser)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Profile updated successfully');
+                    } else {
+                        alert('Failed to update profile: ' + data.message);
+                    }
+                });
+            });
+        });
     </script> 
     <!-- Bootstrap JS bundle -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

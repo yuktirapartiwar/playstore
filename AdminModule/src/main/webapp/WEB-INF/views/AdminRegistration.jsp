@@ -103,7 +103,7 @@
 		</div>
 		<div class="footer">
 			<p>Already have an account? <a href="/admin/login">Login here</a></p>
-			<p>Are you a user? <a href="http://localhost:8082/user/register">Register as User</a></p>
+			<p>Are you a user? <a href="/user/register">Register as User</a></p>
 		</div>
 	</div>
 

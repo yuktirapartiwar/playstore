@@ -12,7 +12,8 @@ import com.playstore.UserModule.exception.UserAlreadyExistsException;
 import com.playstore.UserModule.exception.UserNotFoundException;
 import com.playstore.UserModule.exception.UserUpdateFailedException;
 import com.playstore.UserModule.exception.UserDeletionFailedException;
-import com.playstore.UserModule.model.User;
+import com.playstore.UserModule.model.Users;
+import com.playstore.UserModule.service.JWTService;
 import com.playstore.UserModule.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,15 +24,18 @@ import jakarta.servlet.http.HttpSession;
 public class UserController {
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	JWTService jwtService;
 	
 	@GetMapping("/register")
 	public String showRegistrationForm(Model model) {
-		model.addAttribute("User", new User());
+		model.addAttribute("User", new Users());
 		return "UserRegistration";
 	}
 	
 	@PostMapping("/register")
-	public String registerUser(@ModelAttribute("User") User user, Model model) {
+	public String registerUser(@ModelAttribute("User") Users user, Model model) {
 		try {
 			userService.register(user);
 			return "redirect:/user/login";
@@ -46,7 +50,7 @@ public class UserController {
 
 	@GetMapping("/login")
 	public String showLoginForm(Model model, HttpServletRequest request) {
-		model.addAttribute("User", new User());
+		model.addAttribute("User", new Users());
 		String message = request.getParameter("message");
 		if (message != null) {
 			model.addAttribute("successMessage", message);
@@ -55,11 +59,11 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public String loginUser(@ModelAttribute("User") User user, HttpServletRequest request, Model model) {
+	public String loginUser(@ModelAttribute("User") Users user, HttpServletRequest request, Model model) {
 		try {
-			User loggedInUser = userService.login(user.getEmail(), user.getPassword());
+			String token = userService.authenticateAndGetToken(user.getEmail(), user.getPassword());
 			HttpSession userSession = request.getSession(true);
-			userSession.setAttribute("User", loggedInUser);
+			userSession.setAttribute("jwtToken", token);
 			return "redirect:/user/home";
 		} catch (UserNotFoundException e) {
 			model.addAttribute("errorMessage", e.getMessage());
@@ -79,7 +83,11 @@ public class UserController {
 	@GetMapping("/home")
 	public String userHome(Model model, HttpServletRequest request) {
 		HttpSession userSession = request.getSession(false);
-		if (userSession != null && userSession.getAttribute("User") != null) {
+		if (userSession != null && userSession.getAttribute("jwtToken") != null) {
+			String token = (String) userSession.getAttribute("jwtToken");
+			String email = jwtService.extractUsername(token);
+			Users user = userService.getUserByEmail(email);
+			model.addAttribute("user", user);
 			return "UserHome";
 		}
 		return "redirect:/user/login";
@@ -89,7 +97,7 @@ public class UserController {
 	public String viewProfile(Model model, HttpServletRequest request) {
 		HttpSession userSession = request.getSession(false);
 		if (userSession != null && userSession.getAttribute("User") != null) {
-			User user = (User) userSession.getAttribute("User");
+			Users user = (Users) userSession.getAttribute("User");
 			model.addAttribute("user", user);
 			return "UserProfile";
 		}
@@ -97,10 +105,10 @@ public class UserController {
 	}
 	
 	@PostMapping("/profile/update")
-	public String updateProfile(@ModelAttribute("User") User user, HttpServletRequest request, Model model) {
+	public String updateProfile(@ModelAttribute("User") Users user, HttpServletRequest request, Model model) {
 		HttpSession userSession = request.getSession(false);
 		if (userSession != null && userSession.getAttribute("User") != null) {
-			User existingUser = (User) userSession.getAttribute("User");
+			Users existingUser = (Users) userSession.getAttribute("User");
 			user.setId(existingUser.getId());
 			user.setRole(existingUser.getRole());
 			try {
@@ -122,7 +130,7 @@ public class UserController {
 	public String deleteProfile(HttpServletRequest request, Model model) {
 		HttpSession userSession = request.getSession(false);
 		if (userSession != null && userSession.getAttribute("User") != null) {
-			User user = (User) userSession.getAttribute("User");
+			Users user = (Users) userSession.getAttribute("User");
 			try {
 				userService.delete(user);
 				userSession.invalidate();

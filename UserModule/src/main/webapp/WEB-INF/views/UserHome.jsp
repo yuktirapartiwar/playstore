@@ -99,5 +99,33 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const userSession = '<%= session.getAttribute("jwtToken") %>';
+        if (!userSession) {
+            window.location.href = '/user/login';
+            return;
+        }
+
+        fetch('/user/home', {
+            headers: {
+                'Authorization': 'Bearer ' + userSession
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Unauthorized');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Update the page with user-specific data
+        })
+        .catch(error => {
+            window.location.href = '/user/login';
+        });
+    });
+    </script>
 </body>
 </html>
+

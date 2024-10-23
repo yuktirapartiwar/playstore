@@ -70,7 +70,7 @@
                         <%= request.getAttribute("successMessage") %>
                     </div>
                 <% } %>
-                <form action="/user/login" method="post">
+                <form id="loginForm" action="/user/login" method="post">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <div class="input-group">
@@ -91,10 +91,37 @@
         </div>
         <div class="footer">
             <p>Don't have an account? <a href="/user/register">Register here</a></p>
-            <p>Are you an admin? <a href="http://localhost:8081/admin/login">Login as Admin</a></p>
+            <p>Are you an admin? <a href="/admin/login">Login as Admin</a></p>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData();
+        formData.append('email', document.getElementById('email').value);
+        formData.append('password', document.getElementById('password').value);
+
+        fetch('/user/login', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.text();
+            }
+            throw new Error('Login failed');
+        })
+        .then(data => {
+            window.location.href = '/user/home';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('Invalid email or password');
+        });
+    });
+    </script>
 </body>
 </html>
