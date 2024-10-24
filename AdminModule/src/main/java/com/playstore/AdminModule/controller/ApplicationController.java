@@ -55,4 +55,20 @@ public class ApplicationController {
         return "redirect:/admin/login";
     }
     
+    @GetMapping("/list")
+    public String listApplications(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("Admin") != null) {
+            try {
+                List<ApplicationDTO> applications = applicationService.getAllApplications();
+                model.addAttribute("applications", applications);
+                return "AdminApplicationList";
+            } catch (Exception e) {
+                model.addAttribute("errorMessage", "Failed to fetch applications: " + e.getMessage());
+                return "AdminHome";
+            }
+        }
+        return "redirect:/admin/login";
+    }
+    
 }

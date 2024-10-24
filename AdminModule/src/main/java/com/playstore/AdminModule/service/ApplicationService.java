@@ -24,4 +24,10 @@ public class ApplicationService {
         String url = applicationServiceUrl + "/api/applications";
         return restTemplate.postForObject(url, applicationDTO, ApplicationDTO.class);
     }
+
+    public List<ApplicationDTO> getAllApplications() {
+        String url = applicationServiceUrl + "/api/applications";
+        ResponseEntity<ApplicationDTO[]> response = restTemplate.getForEntity(url, ApplicationDTO[].class);
+        return Arrays.asList(response.getBody());
+    }
 }

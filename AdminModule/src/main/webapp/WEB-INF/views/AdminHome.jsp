@@ -95,7 +95,7 @@
                 <h5 class="card-title">Admin Dashboard</h5>
                 <p class="card-text">Here you can manage applications, updates, and user accounts.</p>
                 <div class="d-flex gap-2">
-                    <a href="/admin/applications" class="btn btn-primary">
+                    <a href="/admin/application/list" class="btn btn-primary">
                         <i class="fas fa-list"></i> Manage Applications
                     </a>
                     <a href="/admin/application/add" class="btn btn-success">

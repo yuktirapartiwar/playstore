@@ -30,4 +30,14 @@ public class ApplicationController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping
+    public ResponseEntity<List<ApplicationDTO>> getAllApplications() {
+        try {
+            List<ApplicationDTO> applications = applicationService.getAllApplications();
+            return new ResponseEntity<>(applications, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -52,4 +52,11 @@ public class ApplicationService {
         );
     }  
 
+    public List<ApplicationDTO> getAllApplications() {
+        List<Application> applications = applicationRepository.findAll();
+        return applications.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
 }
