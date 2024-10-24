@@ -209,6 +209,20 @@
                            value="<%= app.getUrl() %>" required>
                 </div>
 
+                <div class="mb-3">
+                    <label for="logoUrl" class="form-label required-field">Logo URL</label>
+                    <input type="url" class="form-control" id="logoUrl" name="logoUrl" 
+                           value="<%= app.getLogoUrl() %>" required>
+                    <div class="form-text">Direct URL to the application logo</div>
+                    <% if (app.getLogoUrl() != null) { %>
+                        <img src="<%= app.getLogoUrl() %>" 
+                             alt="Current Logo" 
+                             class="mt-2"
+                             style="width: 100px; height: 100px; object-fit: cover; border-radius: 12px;"
+                             onerror="this.style.display='none'">
+                    <% } %>
+                </div>
+
                 <input type="hidden" name="ownerId" value="<%= app.getOwnerId() %>">
                 <input type="hidden" name="downloadCount" value="<%= app.getDownloadCount() %>">
 

@@ -53,10 +53,14 @@ public class Application {
 	@Column(name = "url", columnDefinition = "TEXT")
 	private String url;
 	
+	@Column(name = "logo_url", columnDefinition = "TEXT")
+	private String logoUrl;
+	
 	// Constructors
 		public Application() {
 			this.reviews = new ArrayList<>();
 			this.ratings = new ArrayList<>();
+			this.logoUrl = null;
 		}
 
 		public Application(String name, String description, LocalDate releaseDate, String version, String genre, Long ownerId, String url) {
@@ -164,6 +168,14 @@ public class Application {
 
 		public void setUrl(String url) {
 			this.url = url;
+		}
+
+		public String getLogoUrl() {
+			return logoUrl;
+		}
+
+		public void setLogoUrl(String logoUrl) {
+			this.logoUrl = logoUrl;
 		}
 		
 		

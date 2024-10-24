@@ -34,6 +34,7 @@ public class ApplicationService {
         application.setDownloadCount(dto.getDownloadCount());
         application.setVisibility(dto.getVisibility());
         application.setUrl(dto.getUrl());
+        application.setLogoUrl(dto.getLogoUrl());
         return application;
     }
     
@@ -48,7 +49,8 @@ public class ApplicationService {
             entity.getOwnerId(),
             entity.getDownloadCount(),
             entity.getVisibility(),
-            entity.getUrl()
+            entity.getUrl(),
+            entity.getLogoUrl()
         );
     }  
 

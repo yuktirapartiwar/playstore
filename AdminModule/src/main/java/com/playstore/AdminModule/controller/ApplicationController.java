@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.playstore.AdminModule.DTO.ApplicationDTO;
 import com.playstore.AdminModule.model.Admin;
@@ -25,6 +28,7 @@ public class ApplicationController {
     @Autowired
     private ApplicationService applicationService;
     
+    
     @GetMapping("/add")
     public String showAddApplicationForm(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -36,7 +40,7 @@ public class ApplicationController {
     }
     
     @PostMapping("/add")
-    public String addApplication(@ModelAttribute ApplicationDTO applicationDTO, 
+    public String addApplication(@ModelAttribute ApplicationDTO applicationDTO,
                                HttpServletRequest request, 
                                Model model) {
         HttpSession session = request.getSession(false);

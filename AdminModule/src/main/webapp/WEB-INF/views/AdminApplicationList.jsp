@@ -384,7 +384,18 @@
                             %>
                                 <tr>
                                     <td>
-                                        <span class="app-name"><%= app.getName() %></span>
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <% if (app.getLogoUrl() != null && !app.getLogoUrl().isEmpty()) { %>
+                                                <img src="<%= app.getLogoUrl() %>" 
+                                                     alt="<%= app.getName() %>" 
+                                                     class="app-logo me-2"
+                                                     width="40" height="40"
+                                                     style="border-radius: 8px; object-fit: cover;">
+                                            <% } else { %>
+                                                <i class="fas fa-mobile-alt me-2" style="font-size: 24px; color: #1a73e8;"></i>
+                                            <% } %>
+                                            <span class="app-name"><%= app.getName() %></span>
+                                        </div>
                                     </td>
                                     <td><%= app.getVersion() %></td>
                                     <td><span class="genre-badge"><%= app.getGenre() %></span></td>
