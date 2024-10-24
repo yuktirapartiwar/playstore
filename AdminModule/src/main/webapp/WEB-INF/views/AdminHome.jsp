@@ -35,6 +35,9 @@
             left: 0;
             right: 0;
             height: var(--navbar-height);
+            background-color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             z-index: 1030;
         }
         
@@ -965,6 +968,216 @@
             }
         }
 
+        /* App Grid Styles */
+        .app-grid {
+            margin-top: 2rem;
+        }
+
+        /* App Card */
+        .app-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            height: 100%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .app-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* App Header */
+        .app-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .app-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-right: 0.75rem;
+        }
+
+        .app-info {
+            flex: 1;
+        }
+
+        .app-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0;
+            color: #333;
+            line-height: 1.3;
+        }
+
+        /* App Details */
+        .app-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .app-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .app-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .app-rating i {
+            color: #ffc107;
+            font-size: 0.9rem;
+        }
+
+        .app-rating span {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .app-rating small {
+            font-size: 0.75rem;
+        }
+
+        .app-category .badge {
+            font-weight: 500;
+            font-size: 0.75rem;
+            padding: 0.35rem 0.65rem;
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .app-stats {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .downloads i {
+            font-size: 0.8rem;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .app-icon {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .app-name {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Section Styles */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        /* App Card Styles */
+        .app-card {
+            background: white;
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            height: 100%;
+        }
+
+        .app-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        .app-content {
+            padding: 1.25rem;
+        }
+
+        .app-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            object-fit: cover;
+        }
+
+        .app-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0 0 0.75rem 0;
+            line-height: 1.3;
+        }
+
+        .app-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .category-badge {
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            background-color: #f0f2f5;
+            color: #4a5568;
+            border: none;
+        }
+
+        .app-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: #666;
+        }
+
+        .app-rating i {
+            color: #ffc107;
+            font-size: 0.9rem;
+        }
+
+        .app-rating span {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .app-content {
+                padding: 1rem;
+            }
+
+            .app-icon {
+                width: 56px;
+                height: 56px;
+                border-radius: 14px;
+            }
+
+            .app-name {
+                font-size: 0.95rem;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -1137,6 +1350,57 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Applications Section -->
+            <div class="applications-section mt-4">
+                <!-- Section Header -->
+                <div class="section-header mb-3">
+                    <h5 class="section-title">Applications</h5>
+                </div>
+
+                <!-- App Grid -->
+                <div class="row g-3">
+                    <!-- App Card 1 -->
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="app-card">
+                            <div class="app-content">
+                                <img src="path/to/app-icon.png" alt="Instagram" class="app-icon">
+                                <div class="app-info">
+                                    <h6 class="app-name">Instagram</h6>
+                                    <div class="app-meta">
+                                        <span class="badge category-badge">Social</span>
+                                        <div class="app-rating">
+                                            <i class="fas fa-star"></i>
+                                            <span>4.5</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- App Card 2 -->
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="app-card">
+                            <div class="app-content">
+                                <img src="path/to/app-icon.png" alt="WhatsApp" class="app-icon">
+                                <div class="app-info">
+                                    <h6 class="app-name">WhatsApp</h6>
+                                    <div class="app-meta">
+                                        <span class="badge category-badge">Communication</span>
+                                        <div class="app-rating">
+                                            <i class="fas fa-star"></i>
+                                            <span>4.2</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add more cards as needed -->
                 </div>
             </div>
         </div>
