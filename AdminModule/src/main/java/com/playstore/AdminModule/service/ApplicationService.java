@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -29,5 +32,20 @@ public class ApplicationService {
         String url = applicationServiceUrl + "/api/applications";
         ResponseEntity<ApplicationDTO[]> response = restTemplate.getForEntity(url, ApplicationDTO[].class);
         return Arrays.asList(response.getBody());
+    }
+
+    public ApplicationDTO getApplicationById(Long id) {
+        String url = applicationServiceUrl + "/api/applications/" + id;
+        return restTemplate.getForObject(url, ApplicationDTO.class);
+    }
+
+    public ApplicationDTO updateApplication(ApplicationDTO applicationDTO) {
+        String url = applicationServiceUrl + "/api/applications/" + applicationDTO.getId();
+        return restTemplate.exchange(
+            url, 
+            HttpMethod.PUT, 
+            new HttpEntity<>(applicationDTO), 
+            ApplicationDTO.class
+        ).getBody();
     }
 }

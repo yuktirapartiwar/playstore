@@ -59,4 +59,15 @@ public class ApplicationService {
                 .collect(Collectors.toList());
     }
 
+    public ApplicationDTO updateApplication(ApplicationDTO applicationDTO) {
+        Application application = convertToEntity(applicationDTO);
+        Application updatedApplication = applicationRepository.save(application);
+        return convertToDTO(updatedApplication);
+    }
+
+    public ApplicationDTO getApplicationById(Long id) {
+        Application application = applicationRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Application not found"));
+        return convertToDTO(application);
+    }
 }

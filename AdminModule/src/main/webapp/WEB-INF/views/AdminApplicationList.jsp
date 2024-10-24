@@ -82,9 +82,7 @@
                                         </span>
                                     </td> --%>
                                     <td>
-                                        <a href="/admin/application/edit/<%= app.getId() %>" 
-                                           class="btn btn-sm btn-primary" 
-                                           title="Edit Application">
+                                        <a href="/admin/application/edit/<%= app.getId() %>" class="btn btn-sm btn-primary">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <a href="/admin/application/delete/<%= app.getId() %>" 
