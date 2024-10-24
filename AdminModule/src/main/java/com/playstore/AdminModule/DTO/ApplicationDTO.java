@@ -1,4 +1,4 @@
-package com.playstore.ApplicationModule.DTO;
+package com.playstore.AdminModule.DTO;
 
 import java.time.LocalDate;
 

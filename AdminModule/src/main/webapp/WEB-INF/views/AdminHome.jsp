@@ -68,7 +68,7 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Applications</a>
+                        <a class="nav-link" href="/admin/application/list">Applications</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Updates</a>
@@ -94,7 +94,14 @@
             <div class="card-body">
                 <h5 class="card-title">Admin Dashboard</h5>
                 <p class="card-text">Here you can manage applications, updates, and user accounts.</p>
-                <a href="#" class="btn btn-primary">Manage Applications</a>
+                <div class="d-flex gap-2">
+                    <a href="/admin/applications" class="btn btn-primary">
+                        <i class="fas fa-list"></i> Manage Applications
+                    </a>
+                    <a href="/admin/application/add" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Add Application
+                    </a>
+                </div>
             </div>
         </div>
     </div>

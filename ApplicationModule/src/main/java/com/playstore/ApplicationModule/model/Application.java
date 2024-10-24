@@ -50,13 +50,16 @@ public class Application {
 	@OneToMany(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Rating> ratings = new ArrayList<>();
 	
+	@Column(name = "url", columnDefinition = "TEXT")
+	private String url;
+	
 	// Constructors
 		public Application() {
 			this.reviews = new ArrayList<>();
 			this.ratings = new ArrayList<>();
 		}
 
-		public Application(String name, String description, LocalDate releaseDate, String version, String genre, Long ownerId) {
+		public Application(String name, String description, LocalDate releaseDate, String version, String genre, Long ownerId, String url) {
 			this();
 			this.name = name;
 			this.description = description;
@@ -64,6 +67,7 @@ public class Application {
 			this.version = version;
 			this.genre = genre;
 			this.ownerId = ownerId;
+			this.url = url;
 		}
 
 		public Long getId() {
@@ -152,6 +156,14 @@ public class Application {
 
 		public void setRatings(List<Rating> ratings) {
 			this.ratings = ratings;
+		}
+
+		public String getUrl() {
+			return url;
+		}
+
+		public void setUrl(String url) {
+			this.url = url;
 		}
 		
 		
