@@ -111,4 +111,21 @@ public class ApplicationController {
         return "redirect:/admin/login";
     }
     
+    @GetMapping("/delete/{id}")
+    public String deleteApplication(@PathVariable Long id, 
+                              HttpServletRequest request, 
+                              Model model) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("Admin") != null) {
+            try {
+                applicationService.deleteApplication(id);
+                model.addAttribute("successMessage", "Application deleted successfully!");
+            } catch (Exception e) {
+                model.addAttribute("errorMessage", "Failed to delete application: " + e.getMessage());
+            }
+            return "redirect:/admin/application/list";
+        }
+        return "redirect:/admin/login";
+    }
+    
 }

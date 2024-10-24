@@ -70,4 +70,10 @@ public class ApplicationService {
             .orElseThrow(() -> new RuntimeException("Application not found"));
         return convertToDTO(application);
     }
+
+    public void deleteApplication(Long id) {
+        Application application = applicationRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Application not found"));
+        applicationRepository.delete(application);
+    }
 }

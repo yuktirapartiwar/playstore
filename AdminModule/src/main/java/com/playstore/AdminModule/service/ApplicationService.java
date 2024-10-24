@@ -48,4 +48,9 @@ public class ApplicationService {
             ApplicationDTO.class
         ).getBody();
     }
+
+    public void deleteApplication(Long id) {
+        String url = applicationServiceUrl + "/api/applications/" + id;
+        restTemplate.delete(url);
+    }
 }
