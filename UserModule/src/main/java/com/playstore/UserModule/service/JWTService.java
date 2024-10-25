@@ -21,17 +21,20 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JWTService {
 
-    private String secretkey = "";
+    private final String secretKey;
     
     public JWTService() {
-try {
-			KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
-			SecretKey sk = keyGen.generateKey();
-            secretkey = Base64.getEncoder().encodeToString(sk.getEncoded());
-		} catch (NoSuchAlgorithmException e) {
-			throw new RuntimeException(e);
-		}
-	}
+        // Generate a fixed secret key or better load from configuration
+        KeyGenerator keyGen;
+        try {
+            keyGen = KeyGenerator.getInstance("HmacSHA256");
+            keyGen.init(256); // 256-bit key
+            SecretKey sk = keyGen.generateKey();
+            this.secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Failed to initialize JWT secret key", e);
+        }
+    }
 
 	public String generateToken(String email) {
 		Map<String, Object> claims = new HashMap<>();
@@ -48,7 +51,7 @@ try {
 	}
 
 	private SecretKey getKey() {
-		byte[] keyBytes = Decoders.BASE64.decode(secretkey);
+		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
 		return Keys.hmacShaKeyFor(keyBytes);
 	}
 

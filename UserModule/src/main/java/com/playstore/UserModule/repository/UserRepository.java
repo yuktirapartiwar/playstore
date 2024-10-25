@@ -10,5 +10,6 @@ import com.playstore.UserModule.model.Users;
 @Repository
 public interface UserRepository extends JpaRepository<Users, Long>{
 	Optional<Users> findByEmail(String email);
-	Users findByUsername(String username);
+	Boolean existsByEmail(String email);
+	// Users findByUsername(String username);
 }

@@ -100,6 +100,22 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
+    function fetchWithAuth(url, options = {}) {
+        const token = localStorage.getItem('jwtToken');
+        if (!token) {
+            window.location.href = '/user/login';
+            return;
+        }
+        
+        return fetch(url, {
+            ...options,
+            headers: {
+                ...options.headers,
+                'Authorization': `Bearer ${token}`
+            }
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         const userSession = '<%= session.getAttribute("jwtToken") %>';
         if (!userSession) {
@@ -107,7 +123,7 @@
             return;
         }
 
-        fetch('/user/home', {
+        fetchWithAuth('/user/home', {
             headers: {
                 'Authorization': 'Bearer ' + userSession
             }
@@ -128,4 +144,3 @@
     </script>
 </body>
 </html>
-

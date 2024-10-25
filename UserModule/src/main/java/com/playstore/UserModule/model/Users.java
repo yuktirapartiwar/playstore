@@ -1,5 +1,6 @@
 package com.playstore.UserModule.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +13,15 @@ public class Users {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
-	String username, email, password, role;
+	@Column(name="username")
+	String username;
+	@Column(name="email", unique = true)
+	String email;
+	@Column(name="password")
+	String password;
+	@Column(name="role")
+	String role;
+
 	public Users() {
 		super();
 		// TODO Auto-generated constructor stub

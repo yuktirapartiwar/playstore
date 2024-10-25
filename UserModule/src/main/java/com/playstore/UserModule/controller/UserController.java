@@ -64,8 +64,11 @@ public class UserController {
 			String token = userService.authenticateAndGetToken(user.getEmail(), user.getPassword());
 			HttpSession userSession = request.getSession(true);
 			userSession.setAttribute("jwtToken", token);
+			userSession.setAttribute("User", userService.getUserByEmail(user.getEmail()));
+			System.out.println("Token: " + token);
 			return "redirect:/user/home";
 		} catch (UserNotFoundException e) {
+			System.out.println("Token: " + e.getMessage());
 			model.addAttribute("errorMessage", e.getMessage());
 			return "UserLogin";
 		}
