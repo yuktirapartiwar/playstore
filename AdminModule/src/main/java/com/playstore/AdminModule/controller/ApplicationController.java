@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.playstore.AdminModule.DTO.ApplicationDTO;
 import com.playstore.AdminModule.model.Admin;
 import com.playstore.AdminModule.service.ApplicationService;
+import com.playstore.AdminModule.service.RatingService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -27,6 +28,9 @@ public class ApplicationController {
     
     @Autowired
     private ApplicationService applicationService;
+    
+    @Autowired
+    private RatingService ratingService;
     
     
     @GetMapping("/add")
@@ -66,6 +70,15 @@ public class ApplicationController {
         if (session != null && session.getAttribute("Admin") != null) {
             try {
                 List<ApplicationDTO> applications = applicationService.getAllApplications();
+                
+                // Add average rating for each application
+                for (ApplicationDTO app : applications) {
+                    Double avgRating = ratingService.getAverageRating(app.getId());
+                    if (avgRating != null) {
+                        model.addAttribute("averageRating_" + app.getId(), avgRating);
+                    }
+                }
+                
                 model.addAttribute("applications", applications);
                 return "AdminApplicationList";
             } catch (Exception e) {

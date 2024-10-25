@@ -408,11 +408,12 @@
                                     </td>
                                     <td>
                                         <div class="rating">
-                                            <% if (app.getAverageRating() != null) { %>
-                                                <span><%= String.format("%.1f", app.getAverageRating()) %></span>
+                                            <% Double avgRating = (Double) request.getAttribute("averageRating_" + app.getId()); %>
+                                            <% if (avgRating != null) { %>
+                                                <span><%= String.format("%.1f", avgRating) %></span>
                                                 <div class="stars">
                                                     <% for (int i = 1; i <= 5; i++) { %>
-                                                        <i class="fas fa-star <%= i <= app.getAverageRating() ? "text-warning" : "text-muted" %>"></i>
+                                                        <i class="fas fa-star <%= i <= avgRating ? "text-warning" : "text-muted" %>"></i>
                                                     <% } %>
                                                 </div>
                                             <% } else { %>

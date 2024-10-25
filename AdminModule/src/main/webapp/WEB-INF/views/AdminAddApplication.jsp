@@ -183,11 +183,17 @@ body {
                     <input type="text" class="form-control" id="version" name="version" required>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="genre" class="form-label required-field">Genre</label>
-                    <input type="text" class="form-control" id="genre" name="genre" required>
+                    <select class="form-control" id="genre" name="genre" required>
+                        <option value="">Select a genre</option>
+                        <option value="Games">Games</option>
+                            <option value="Beauty">Beauty</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Women">Women</option>
+                        <option value="Health">Health</option>
+                    </select>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="releaseDate" class="form-label required-field">Release Date</label>
@@ -212,6 +218,14 @@ body {
                        placeholder="Enter direct URL to application logo" required>
                 <div class="form-text">Provide a direct URL to the application logo (recommended size: 512x512 pixels)</div>
                 <div id="logoPreview" class="mt-2"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="visibility" class="form-label required-field">Visibility</label>
+                <select class="form-control" id="visibility" name="visibility" required>
+                    <option value="true">Visible</option>
+                    <option value="false">Hidden</option>
+                </select>
             </div>
 
             <div class="mt-4">

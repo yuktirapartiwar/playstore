@@ -14,12 +14,13 @@ public class ApplicationDTO {
     private Boolean visibility;
     private String url;
      private String logoUrl;
+     private String averageRating;
 	public ApplicationDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public ApplicationDTO(Long id, String name, String description, LocalDate releaseDate, String version, String genre,
-			Long ownerId, Integer downloadCount, Boolean visibility, String url, String logoUrl) {
+			Long ownerId, Integer downloadCount, Boolean visibility, String url, String logoUrl, String averageRating   ) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -32,7 +33,8 @@ public class ApplicationDTO {
 		this.visibility = visibility;
 		this.url = url;
         this.logoUrl = logoUrl;
-	}
+        this.averageRating = averageRating;
+	    }
 	public Long getId() {
 		return id;
 	}
@@ -99,5 +101,10 @@ public class ApplicationDTO {
 	public void setLogoUrl(String logoUrl) {
 		this.logoUrl = logoUrl;
 	}
-    
+    public String getAverageRating() {
+		return averageRating;
+	}
+	public void setAverageRating(String averageRating) {
+		this.averageRating = averageRating;
+	}
 }
