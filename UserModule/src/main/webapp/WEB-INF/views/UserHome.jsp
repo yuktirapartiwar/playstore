@@ -99,5 +99,51 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<<<<<<< Updated upstream
+=======
+    <script>
+    function fetchWithAuth(url, options = {}) {
+        const token = localStorage.getItem('jwtToken');
+        if (!token) {
+            window.location.href = '/user/login';
+            return;
+        }
+        
+        return fetch(url, {
+            ...options,
+            headers: {
+                ...options.headers,
+                'Authorization': `Bearer ${token}`
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const userSession = '<%= session.getAttribute("jwtToken") %>';
+        if (!userSession) {
+            window.location.href = '/user/login';
+            return;
+        }
+
+        fetchWithAuth('/user/home', {
+            headers: {
+                'Authorization': 'Bearer ' + userSession
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Unauthorized');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Update the page with user-specific data
+        })
+        .catch(error => {
+            window.location.href = '/user/login';
+        });
+    });
+    </script>
+>>>>>>> Stashed changes
 </body>
 </html>

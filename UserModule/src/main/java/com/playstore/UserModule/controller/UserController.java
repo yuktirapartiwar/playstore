@@ -59,9 +59,16 @@ public class UserController {
 		try {
 			User loggedInUser = userService.login(user.getEmail(), user.getPassword());
 			HttpSession userSession = request.getSession(true);
+<<<<<<< Updated upstream
 			userSession.setAttribute("User", loggedInUser);
+=======
+			userSession.setAttribute("jwtToken", token);
+			userSession.setAttribute("User", userService.getUserByEmail(user.getEmail()));
+			System.out.println("Token: " + token);
+>>>>>>> Stashed changes
 			return "redirect:/user/home";
 		} catch (UserNotFoundException e) {
+			System.out.println("Token: " + e.getMessage());
 			model.addAttribute("errorMessage", e.getMessage());
 			return "UserLogin";
 		}

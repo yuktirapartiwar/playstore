@@ -96,5 +96,57 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<<<<<<< Updated upstream
+=======
+    <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        
+        // First try the MVC endpoint
+        fetch('/user/login', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+                return Promise.reject('Redirected'); // Stop the chain
+            }
+            return response.json(); // Try to parse JSON response
+        })
+        .catch(error => {
+            if (error === 'Redirected') return; // If redirected, stop here
+            
+            // If MVC endpoint failed, try the REST endpoint
+            return fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    localStorage.setItem('jwtToken', data.token);
+                    window.location.href = '/user/home';
+                } else if (data.error) {
+                    throw new Error(data.error);
+                }
+            });
+        })
+        .catch(error => {
+            if (error === 'Redirected') return; // Ignore redirected "error"
+            console.error('Error:', error);
+            alert('Invalid email or password');
+        });
+    });
+    </script>
+>>>>>>> Stashed changes
 </body>
 </html>
