@@ -1,4 +1,4 @@
-package com.playstore.ApplicationModule.DTO;
+package com.playstore.AdminModule.DTO;
 
 import java.time.LocalDate;
 
@@ -13,7 +13,7 @@ public class ApplicationDTO {
     private Integer downloadCount;
     private Boolean visibility;
     private String url;
-    private String logoUrl;
+     private String logoUrl;
 	public ApplicationDTO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -31,7 +31,7 @@ public class ApplicationDTO {
 		this.downloadCount = downloadCount;
 		this.visibility = visibility;
 		this.url = url;
-		this.logoUrl = logoUrl;
+        this.logoUrl = logoUrl;
 	}
 	public Long getId() {
 		return id;
@@ -93,12 +93,11 @@ public class ApplicationDTO {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public String getLogoUrl() {
+    public String getLogoUrl() {
 		return logoUrl;
 	}
 	public void setLogoUrl(String logoUrl) {
 		this.logoUrl = logoUrl;
 	}
-    
     
 }
