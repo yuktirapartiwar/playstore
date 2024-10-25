@@ -91,7 +91,7 @@
         </div>
         <div class="footer">
             <p>Don't have an account? <a href="/user/register">Register here</a></p>
-            <p>Are you an admin? <a href="http://localhost:8081/admin/login">Login as Admin</a></p>
+            <p>Are you an admin? <a href="/admin/login">Login as Admin</a></p>
         </div>
     </div>
 

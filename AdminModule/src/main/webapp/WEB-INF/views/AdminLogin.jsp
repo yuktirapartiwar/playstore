@@ -92,7 +92,7 @@
 		</div>
 		<div class="footer">
 			<p>Don't have an account? <a href="/admin/register">Register here</a></p>
-			<p>Are you a user? <a href="http://localhost:8082/user/login">Login as User</a></p>
+			<p>Are you a user? <a href="/user/login">Login as User</a></p>
 		</div>
 	</div>
 
