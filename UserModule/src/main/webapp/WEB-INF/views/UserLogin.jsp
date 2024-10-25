@@ -5,96 +5,215 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Login - PlayStore</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #1a73e8;
+            --danger-color: #dc3545;
+            --footer-height: 56px;
+        }
+
         body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            padding-bottom: calc(var(--footer-height) + 1.5rem);
         }
-        .container {
-            max-width: 500px;
-            margin-top: 50px;
-        }
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-        .card-header {
-            background-color: #28a745;
-            color: white;
-            text-align: center;
-            border-radius: 15px 15px 0 0;
-            padding: 20px;
-        }
-        .card-body {
-            padding: 30px;
-        }
-        .form-label {
-            font-weight: 600;
-        }
-        .btn-primary {
-            background-color: #28a745;
-            border: none;
+
+        .login-container {
             width: 100%;
-            padding: 12px;
-            font-size: 18px;
-            font-weight: 600;
-            margin-top: 20px;
+            max-width: 900px;
+            display: flex;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
         }
-        .btn-primary:hover {
-            background-color: #218838;
-        }
-        .footer {
+
+        .login-sidebar {
+            background-color: var(--primary-color);
+            padding: 2rem;
+            color: white;
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            margin-top: 20px;
+        }
+
+        .login-main {
+            padding: 2rem;
+            width: 60%;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-logo i {
+            font-size: 40px;
+            color: var(--primary-color);
+        }
+
+        .login-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .login-subtitle {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 0.625rem;
+            border: 1px solid #e0e0e0;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #555;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.875rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #1557b0;
+            transform: translateY(-1px);
+        }
+
+        .alert {
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .register-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Adjust responsive behavior */
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+                max-width: 420px;
+            }
+
+            .login-sidebar {
+                width: 100%;
+                padding: 1.5rem;
+            }
+
+            .login-main {
+                width: 100%;
+            }
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: var(--footer-height);
+            background-color: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: #6c757d;
+            z-index: 1030;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="mb-0">PlayStore User Login</h2>
+    <div class="login-container">
+        <div class="login-sidebar">
+            <div class="login-logo">
+                <i class="fas fa-user"></i>
             </div>
-            <div class="card-body">
-                <% if (request.getAttribute("errorMessage") != null) { %>
-                    <div class="alert alert-danger" role="alert">
-                        <%= request.getAttribute("errorMessage") %>
-                    </div>
-                <% } %>
-                <% if (request.getAttribute("successMessage") != null) { %>
-                    <div class="alert alert-success" role="alert">
-                        <%= request.getAttribute("successMessage") %>
-                    </div>
-                <% } %>
-                <form action="/user/login" method="post">
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                            <input type="email" id="email" name="email" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            <input type="password" id="password" name="password" class="form-control" required>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </form>
-            </div>
+            <h1 class="login-title">Welcome Back!</h1>
+            <p class="login-subtitle">Sign in to continue to PlayStore</p>
         </div>
-        <div class="footer">
-            <p>Don't have an account? <a href="/user/register">Register here</a></p>
-            <p>Are you an admin? <a href="/admin/login">Login as Admin</a></p>
+
+        <div class="login-main">
+            <!-- <h2 class="mb-4">Sign In</h2> -->
+            
+            <% if (request.getAttribute("errorMessage") != null) { %>
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <%= request.getAttribute("errorMessage") %>
+                </div>
+            <% } %>
+            
+            <% if (request.getAttribute("successMessage") != null) { %>
+                <div class="alert alert-success" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <%= request.getAttribute("successMessage") %>
+                </div>
+            <% } %>
+
+            <form action="/user/login" method="post">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+
+            <div class="register-link">
+                <p>Don't have an account? <a href="/user/register">Register now</a></p>
+                <p>Want to login as admin? <a href="/admin/login">Login as Admin</a></p>
+            </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <footer class="footer">
+        <p class="mb-0">&copy; 2024 PlayStore. All rights reserved.</p>
+    </footer>
 </body>
 </html>

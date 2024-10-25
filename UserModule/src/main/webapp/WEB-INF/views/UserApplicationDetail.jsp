@@ -13,16 +13,48 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 <style>
+:root {
+    --primary-color: #1a73e8;
+    --secondary-color: #34a853;
+    --danger-color: #ea4335;
+    --warning-color: #fbbc05;
+    --navbar-height: 60px;
+    --footer-height: 56px;
+    --sidebar-width: 250px;
+}
+
 body {
-    background-color: #f8f9fa;
-    font-family: 'Arial', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding-top: var(--navbar-height);
 }
+
 .navbar {
-    background-color: #28a745;
+    background-color: var(--primary-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    height: var(--navbar-height);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-.navbar-brand, .nav-link {
-    color: white !important;
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--footer-height);
+    background-color: white;
+    border-top: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    z-index: 10;
 }
+
 .app-detail-card {
     background: white;
     border-radius: 15px;
@@ -148,6 +180,23 @@ body {
     font-size: 1rem;
     margin-right: 2px;
 }
+
+.ratings-reviews-container {
+    margin-top: 3rem;
+}
+
+.review-card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 </style>
 </head>
 <body>
@@ -228,68 +277,80 @@ body {
         <button class="download-btn" onclick="event.stopPropagation(); downloadApplication('<%= app.getUrl() %>', '<%= app.getId() %>')">
             <i class="fas fa-download me-2"></i>Download
         </button>
-    </div>
-</div>
 
-<div class="review-section mt-4">
-    <h3>Write a Review</h3>
-    <form action="/user/review/submit" method="post">
-        <input type="hidden" name="applicationId" value="<%= app.getId() %>">
-        <div class="mb-3">
-            <label for="reviewText" class="form-label">Your Review</label>
-            <textarea class="form-control" id="reviewText" name="reviewText" 
-                      rows="4" required placeholder="Share your thoughts about this application..."></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-paper-plane me-2"></i>Submit Review
-        </button>
-    </form>
-</div>
-
-<div class="reviews-list mt-5">
-    <h3>Reviews</h3>
-    <% if (reviews != null && !reviews.isEmpty()) {
-        for (ReviewDTO review : reviews) { %>
-            <div class="review-card mb-4 p-4 bg-white rounded shadow-sm">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <div class="user-info">
-                        <i class="fas fa-user-circle me-2"></i>
-                        <span class="fw-bold"><%= review.getUsername() %></span>
+        <div class="ratings-reviews-container mt-4">
+            <div class="row">
+                <!-- Rating Section -->
+                <div class="col-md-5">
+                    <div class="rating-section bg-white p-4 rounded shadow-sm">
+                        <h4 class="mb-4">Rate this Application</h4>
+                        <form action="/user/rating/submit" method="post" class="rating-form">
+                            <input type="hidden" name="applicationId" value="<%= app.getId() %>">
+                            <div class="star-rating mb-3">
+                                <input type="radio" id="star5" name="ratingValue" value="5" required>
+                                <label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star4" name="ratingValue" value="4">
+                                <label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star3" name="ratingValue" value="3">
+                                <label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star2" name="ratingValue" value="2">
+                                <label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star1" name="ratingValue" value="1">
+                                <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-star me-2"></i>Submit Rating
+                            </button>
+                        </form>
                     </div>
-                    <small class="text-muted">
-                        <%= review.getReviewDate().format(formatter) %>
-                    </small>
-                </div>
-                <p class="review-text mb-0"><%= review.getReviewText() %></p>
-            </div>
-        <% }
-    } else { %>
-        <div class="alert alert-info" role="alert">
-            No reviews yet. Be the first to review this application!
-        </div>
-    <% } %>
-</div>
 
-<div class="rating-section mt-4 mb-4">
-    <h3>Rate this Application</h3>
-    <form action="/user/rating/submit" method="post" class="rating-form">
-        <input type="hidden" name="applicationId" value="<%= app.getId() %>">
-        <div class="star-rating">
-            <input type="radio" id="star5" name="ratingValue" value="5" required>
-            <label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
-            <input type="radio" id="star4" name="ratingValue" value="4">
-            <label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
-            <input type="radio" id="star3" name="ratingValue" value="3">
-            <label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
-            <input type="radio" id="star2" name="ratingValue" value="2">
-            <label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
-            <input type="radio" id="star1" name="ratingValue" value="1">
-            <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+                    <div class="review-form-section bg-white p-4 rounded shadow-sm mt-4">
+                        <h4 class="mb-4">Write a Review</h4>
+                        <form action="/user/review/submit" method="post">
+                            <input type="hidden" name="applicationId" value="<%= app.getId() %>">
+                            <div class="mb-3">
+                                <textarea class="form-control" id="reviewText" name="reviewText" 
+                                          rows="4" required placeholder="Share your thoughts about this application..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Review
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Reviews List Section -->
+                <div class="col-md-7">
+                    <div class="reviews-section bg-white p-4 rounded shadow-sm">
+                        <h4 class="mb-4">User Reviews</h4>
+                        <div class="reviews-container" style="max-height: 600px; overflow-y: auto;">
+                            <% if (reviews != null && !reviews.isEmpty()) {
+                                for (ReviewDTO review : reviews) { %>
+                                    <div class="review-card mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <div class="user-info">
+                                                <i class="fas fa-user-circle me-2"></i>
+                                                <span class="fw-bold"><%= review.getUsername() %></span>
+                                            </div>
+                                            <small class="text-muted">
+                                                <%= review.getReviewDate().format(formatter) %>
+                                            </small>
+                                        </div>
+                                        <p class="review-text mb-0"><%= review.getReviewText() %></p>
+                                    </div>
+                                <% }
+                            } else { %>
+                                <div class="alert alert-info" role="alert">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    No reviews yet. Be the first to review this application!
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">
-            <i class="fas fa-star me-2"></i>Submit Rating
-        </button>
-    </form>
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

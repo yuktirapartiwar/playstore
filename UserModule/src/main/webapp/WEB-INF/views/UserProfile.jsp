@@ -8,134 +8,214 @@
     <title>User Profile - PlayStore</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <!-- Styles for the user profile page -->
     <style>
+        :root {
+            --primary-color: #1a73e8;
+            --danger-color: #dc3545;
+            --success-color: #28a745;
+            --navbar-height: 60px;
+        }
+
         body {
             background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            padding-top: var(--navbar-height);
         }
+
+        /* Copy navbar styles from AdminProfile.jsp */
         .navbar {
-            background-color: #28a745;
+            background-color: var(--primary-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            height: var(--navbar-height);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .navbar-brand, .nav-link {
-            color: white !important;
-        }
+
         .container {
-            margin-top: 50px;
+            margin-top: 2rem;
         }
-        .card {
-            border: none;
+
+        .form-card {
+            background: white;
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
         }
-        .card-header {
-            background-color: #28a745;
-            color: white;
-            text-align: center;
-            border-radius: 15px 15px 0 0;
-            padding: 20px;
+
+        .profile-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(26, 115, 232, 0.1);
         }
-        .card-body {
-            padding: 30px;
+
+        .page-title {
+            color: #333;
+            font-weight: 600;
         }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(26,115,232,0.1);
+            background-color: white;
+        }
+
+        .form-control[readonly] {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
         .btn-primary {
-            background-color: #28a745;
+            background-color: var(--primary-color);
             border: none;
         }
+
         .btn-primary:hover {
-            background-color: #218838;
+            background-color: #1557b0;
+            transform: translateY(-1px);
         }
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px 0;
-            background-color: #f8f9fa;
-            color: #6c757d;
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: translateY(-1px);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .alert {
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation bar for user pages -->
+    <!-- Navbar with icons -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">PlayStore</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-play-circle me-2"></i>PlayStore
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/home">Home</a>
+                        <a class="nav-link" href="/user/home"><i class="fas fa-home me-1"></i>Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">My Apps</a>
+                        <a class="nav-link" href="#"><i class="fas fa-mobile-alt me-1"></i>My Apps</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Browse</a>
+                        <a class="nav-link active" href="/user/profile"><i class="fas fa-user me-1"></i>Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/user/profile">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/logout">Logout</a>
+                        <a class="nav-link" href="/user/logout"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container">
-        <!-- User profile information card -->
-        <div class="card">
-            <div class="card-header">
-                <h2 class="mb-0">User Profile</h2>
-            </div>
-            <div class="card-body">
-                <% if (request.getAttribute("errorMessage") != null) { %>
-                    <div class="alert alert-danger" role="alert">
-                        <%= request.getAttribute("errorMessage") %>
-                    </div>
-                <% } %>
-                <!-- Form for displaying and editing user profile information -->
-                <form id="profileForm" action="/user/profile/update" method="post">
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="form-card">
+            <div class="d-flex align-items-center mb-4">
+                <div class="profile-icon me-3">
+                    <i class="fas fa-user-circle fa-3x text-primary"></i>
+                </div>
+                <div>
                     <% User user = (User)request.getSession(false).getAttribute("User"); %>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" value="<%=user.getUsername()%>" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="<%=user.getEmail()%>" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" value="<%=user.getPassword()%>" readonly>
-                    </div>
-                    <!-- Buttons for editing and saving profile information -->
-                    <button type="button" class="btn btn-primary" id="editBtn">Edit</button>
-                    <button type="submit" class="btn btn-success" id="saveBtn" style="display:none;">Save</button>
-                </form>
-                <!-- Button for deleting the user account -->
-                <a href="/user/profile/delete" class="btn btn-danger mt-3">Delete Account</a>
+                    <h2 class="page-title mb-0">User Profile</h2>
+                    <p class="text-muted mb-0">Manage your account information</p>
+                </div>
             </div>
+
+            <% if (request.getAttribute("errorMessage") != null) { %>
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <%= request.getAttribute("errorMessage") %>
+                </div>
+            <% } %>
+
+            <form id="profileForm" action="/user/profile/update" method="post">
+                <div class="form-group">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" value="<%=user.getUsername()%>" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="<%=user.getEmail()%>" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" value="<%=user.getPassword()%>" readonly>
+                </div>
+
+                <div class="action-buttons">
+                    <button type="button" class="btn btn-primary" id="editBtn">
+                        <i class="fas fa-edit me-2"></i>Edit Profile
+                    </button>
+                    <button type="submit" class="btn btn-success" id="saveBtn" style="display:none;">
+                        <i class="fas fa-save me-2"></i>Save Changes
+                    </button>
+                    <a href="/user/profile/delete" class="btn btn-danger">
+                        <i class="fas fa-trash-alt me-2"></i>Delete Account
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
-    <!-- Footer section -->
-    <div class="footer">
-        <p>&copy; 2024 PlayStore. All Rights Reserved.</p>
-    </div>
 
-    <!-- JavaScript for handling profile editing functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById("editBtn").onclick = function() {
-            document.getElementById("username").removeAttribute("readonly");
-            document.getElementById("email").removeAttribute("readonly");
-            document.getElementById("password").removeAttribute("readonly");
-            document.getElementById("editBtn").style.display = "none";
-            document.getElementById("saveBtn").style.display = "inline-block";
-        };
-    </script> 
-    <!-- Bootstrap JS bundle -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        document.getElementById('editBtn').addEventListener('click', function() {
+            document.getElementById('email').readOnly = false;
+            document.getElementById('password').readOnly = false;
+            document.getElementById('editBtn').style.display = 'none';
+            document.getElementById('saveBtn').style.display = 'block';
+        });
+    </script>
 </body>
 </html>
