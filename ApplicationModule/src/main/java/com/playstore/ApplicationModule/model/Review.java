@@ -26,6 +26,9 @@ public class Review {
 	@Column(name = "user_id", nullable = false)
 	private Long userId;
 
+	@Column(name = "username")
+	private String username;
+
 	@Column(name = "review_date")
 	private LocalDateTime reviewDate;
 
@@ -38,10 +41,11 @@ public class Review {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Review(String reviewText, Long userId, LocalDateTime reviewDate, Application application) {
+	public Review(String reviewText, Long userId, String username, LocalDateTime reviewDate, Application application) {
 		super();
 		this.reviewText = reviewText;
 		this.userId = userId;
+		this.username = username;
 		this.reviewDate = reviewDate;
 		this.application = application;
 	}
@@ -84,6 +88,14 @@ public class Review {
 
 	public void setApplication(Application application) {
 		this.application = application;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	

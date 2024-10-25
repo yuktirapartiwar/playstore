@@ -75,6 +75,23 @@ body {
     background-color: #218838;
     transform: translateY(-2px);
 }
+.review-card {
+    transition: transform 0.2s;
+}
+.review-card:hover {
+    transform: translateY(-2px);
+}
+.user-info {
+    color: #495057;
+}
+.review-text {
+    color: #212529;
+    line-height: 1.6;
+}
+.reviews-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
 </style>
 </head>
 <body>
@@ -138,6 +155,56 @@ body {
             <i class="fas fa-download me-2"></i>Download
         </button>
     </div>
+</div>
+
+<div class="review-section mt-4">
+    <h3>Write a Review</h3>
+    <form action="/user/review/submit" method="post">
+        <input type="hidden" name="applicationId" value="<%= app.getId() %>">
+        <div class="mb-3">
+            <label for="reviewText" class="form-label">Your Review</label>
+            <textarea class="form-control" id="reviewText" name="reviewText" 
+                      rows="4" required placeholder="Share your thoughts about this application..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-paper-plane me-2"></i>Submit Review
+        </button>
+    </form>
+</div>
+
+<div class="reviews-list mt-5">
+    <h3>Reviews</h3>
+    <%@ page import="java.util.List" %>
+    <%@ page import="com.playstore.UserModule.DTO.ReviewDTO" %>
+    <%@ page import="java.time.format.DateTimeFormatter" %>
+    <% 
+        List<ReviewDTO> reviews = (List<ReviewDTO>) request.getAttribute("reviews");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
+        if (reviews != null && !reviews.isEmpty()) {
+            for (ReviewDTO review : reviews) {
+    %>
+        <div class="review-card mb-4 p-4 bg-white rounded shadow-sm">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="user-info">
+                    <i class="fas fa-user-circle me-2"></i>
+                    <span class="fw-bold"><%= review.getUsername() %></span>
+                </div>
+                <small class="text-muted">
+                    <%= review.getReviewDate().format(formatter) %>
+                </small>
+            </div>
+            <p class="review-text mb-0"><%= review.getReviewText() %></p>
+        </div>
+    <%
+            }
+        } else {
+    %>
+        <div class="alert alert-info" role="alert">
+            No reviews yet. Be the first to review this application!
+        </div>
+    <%
+        }
+    %>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
