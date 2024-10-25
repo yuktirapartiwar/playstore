@@ -161,7 +161,7 @@
             if (applications != null && !applications.isEmpty()) {
                 for (ApplicationDTO app : applications) {
             %>
-                <div class="app-card">
+                <div class="app-card" onclick="window.location.href='/user/application/<%= app.getId() %>';" style="cursor: pointer;">
                     <% if (app.getLogoUrl() != null && !app.getLogoUrl().isEmpty()) { %>
                         <img src="<%= app.getLogoUrl() %>" alt="<%= app.getName() %>" class="app-icon">
                     <% } else { %>

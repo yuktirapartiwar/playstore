@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -144,6 +145,21 @@ public class UserController {
 			} catch (UserDeletionFailedException e) {
 				model.addAttribute("errorMessage", e.getMessage());
 				return "UserProfile";
+			}
+		}
+		return "redirect:/user/login";
+	}
+	
+	@GetMapping("/application/{id}")
+	public String viewApplication(@PathVariable Long id, Model model, HttpServletRequest request) {
+		HttpSession userSession = request.getSession(false);
+		if (userSession != null && userSession.getAttribute("User") != null) {
+			try {
+				ApplicationDTO application = applicationService.getApplicationById(id);
+				model.addAttribute("application", application);
+				return "UserApplicationDetail";
+			} catch (Exception e) {
+				return "redirect:/user/home";
 			}
 		}
 		return "redirect:/user/login";
