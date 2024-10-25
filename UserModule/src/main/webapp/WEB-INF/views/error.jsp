@@ -10,8 +10,8 @@
 <body>
     <div class="container mt-5">
         <h1>An error occurred</h1>
-        <p>${exception}</p>
-        <p>Requested URL: ${url}</p>
+        <p><%= request.getAttribute("exception") %></p>
+        <p>Requested URL: <%= request.getAttribute("url") %></p>
         <a href="javascript:history.back()" class="btn btn-primary">Go Back</a>
     </div>
 </body>

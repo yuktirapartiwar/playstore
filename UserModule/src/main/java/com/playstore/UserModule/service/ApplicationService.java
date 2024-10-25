@@ -30,4 +30,9 @@ public class ApplicationService {
         String url = applicationServiceUrl + "/api/applications/" + id;
         return restTemplate.getForObject(url, ApplicationDTO.class);
     }
+
+    public void incrementDownloadCount(Long id) {
+        String url = applicationServiceUrl + "/api/applications/" + id + "/download";
+        restTemplate.postForObject(url, null, Void.class);
+    }
 }

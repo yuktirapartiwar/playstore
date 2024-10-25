@@ -84,4 +84,14 @@ public class ApplicationController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/{id}/download")
+    public ResponseEntity<Void> incrementDownloadCount(@PathVariable Long id) {
+        try {
+            applicationService.incrementDownloadCount(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

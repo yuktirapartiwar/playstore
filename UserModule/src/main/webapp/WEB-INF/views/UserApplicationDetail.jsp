@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.playstore.UserModule.DTO.ApplicationDTO"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.playstore.UserModule.DTO.ReviewDTO" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,10 +95,20 @@ body {
     max-width: 800px;
     margin: 0 auto;
 }
+.alert {
+    z-index: 1050;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+    width: 400px;
+}
 </style>
 </head>
 <body>
-<% ApplicationDTO app = (ApplicationDTO)request.getAttribute("application"); %>
+<% 
+    ApplicationDTO app = (ApplicationDTO)request.getAttribute("application");
+    List<ReviewDTO> reviews = (List<ReviewDTO>)request.getAttribute("reviews");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
+%>
     
 <!-- Navigation bar -->
 <nav class="navbar navbar-expand-lg navbar-dark">
@@ -151,7 +164,7 @@ body {
             </div>
         </div>
 
-        <button class="download-btn">
+        <button class="download-btn" onclick="event.stopPropagation(); downloadApplication('<%= app.getUrl() %>', '<%= app.getId() %>')">
             <i class="fas fa-download me-2"></i>Download
         </button>
     </div>
@@ -174,39 +187,58 @@ body {
 
 <div class="reviews-list mt-5">
     <h3>Reviews</h3>
-    <%@ page import="java.util.List" %>
-    <%@ page import="com.playstore.UserModule.DTO.ReviewDTO" %>
-    <%@ page import="java.time.format.DateTimeFormatter" %>
-    <% 
-        List<ReviewDTO> reviews = (List<ReviewDTO>) request.getAttribute("reviews");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
-        if (reviews != null && !reviews.isEmpty()) {
-            for (ReviewDTO review : reviews) {
-    %>
-        <div class="review-card mb-4 p-4 bg-white rounded shadow-sm">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <div class="user-info">
-                    <i class="fas fa-user-circle me-2"></i>
-                    <span class="fw-bold"><%= review.getUsername() %></span>
+    <% if (reviews != null && !reviews.isEmpty()) {
+        for (ReviewDTO review : reviews) { %>
+            <div class="review-card mb-4 p-4 bg-white rounded shadow-sm">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="user-info">
+                        <i class="fas fa-user-circle me-2"></i>
+                        <span class="fw-bold"><%= review.getUsername() %></span>
+                    </div>
+                    <small class="text-muted">
+                        <%= review.getReviewDate().format(formatter) %>
+                    </small>
                 </div>
-                <small class="text-muted">
-                    <%= review.getReviewDate().format(formatter) %>
-                </small>
+                <p class="review-text mb-0"><%= review.getReviewText() %></p>
             </div>
-            <p class="review-text mb-0"><%= review.getReviewText() %></p>
-        </div>
-    <%
-            }
-        } else {
-    %>
+        <% }
+    } else { %>
         <div class="alert alert-info" role="alert">
             No reviews yet. Be the first to review this application!
         </div>
-    <%
-        }
-    %>
+    <% } %>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+function downloadApplication(url, applicationId) {
+    // Make AJAX call to increment download count
+    fetch('/api/downloads/' + applicationId, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    
+    // Show success message
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+    alertDiv.innerHTML = `
+        <strong>Success!</strong> Your download will begin shortly.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+    document.body.appendChild(alertDiv);
+
+    
+
+    // Open URL in new tab
+    window.open(url, '_blank');
+
+    // Remove alert after 30 seconds
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 30000);
+}
+</script>
 </body>
 </html>

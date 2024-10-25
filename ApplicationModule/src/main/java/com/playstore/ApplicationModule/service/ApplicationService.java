@@ -85,4 +85,12 @@ public class ApplicationService {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
+
+    public void incrementDownloadCount(Long id) {
+        System.out.println("Incrementing download count for application with id: " + id);.
+        Application application = applicationRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Application not found"));
+        application.setDownloadCount(application.getDownloadCount() + 1);
+        applicationRepository.save(application);
+    }
 }
