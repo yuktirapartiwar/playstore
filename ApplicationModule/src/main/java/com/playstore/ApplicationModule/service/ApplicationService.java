@@ -78,4 +78,11 @@ public class ApplicationService {
             .orElseThrow(() -> new RuntimeException("Application not found"));
         applicationRepository.delete(application);
     }
+
+    public List<ApplicationDTO> getAllVisibleApplications() {
+        List<Application> applications = applicationRepository.findByVisibilityTrue();
+        return applications.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
 }

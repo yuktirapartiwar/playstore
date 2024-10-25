@@ -74,4 +74,14 @@ public class ApplicationController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/visible")
+    public ResponseEntity<List<ApplicationDTO>> getVisibleApplications() {
+        try {
+            List<ApplicationDTO> applications = applicationService.getAllVisibleApplications();
+            return new ResponseEntity<>(applications, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

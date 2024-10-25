@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%@page import="com.playstore.UserModule.DTO.ApplicationDTO"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,6 +52,75 @@
             background-color: #f8f9fa;
             color: #6c757d;
         }
+        /* Keep existing styles from reference and add: */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+        
+        .app-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            display: block;
+        }
+        
+        .app-info {
+            text-align: center;
+        }
+        
+        .app-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .app-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .category-badge {
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        
+        .download-btn {
+            width: 100%;
+            background-color: #28a745;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            background-color: #218838;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -81,16 +152,47 @@
         </div>
     </nav>
 
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="mb-0">Welcome to PlayStore!</h2>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Discover New Apps</h5>
-                <p class="card-text">Explore thousands of apps and games in our store.</p>
-                <a href="#" class="btn btn-primary">Browse Apps</a>
-            </div>
+    <div class="container mt-4">
+        <h2 class="mb-4">Featured Applications</h2>
+        
+        <div class="app-grid">
+            <% 
+            List<ApplicationDTO> applications = (List<ApplicationDTO>)request.getAttribute("applications");
+            if (applications != null && !applications.isEmpty()) {
+                for (ApplicationDTO app : applications) {
+            %>
+                <div class="app-card">
+                    <% if (app.getLogoUrl() != null && !app.getLogoUrl().isEmpty()) { %>
+                        <img src="<%= app.getLogoUrl() %>" alt="<%= app.getName() %>" class="app-icon">
+                    <% } else { %>
+                        <div class="app-icon d-flex align-items-center justify-content-center bg-light">
+                            <i class="fas fa-mobile-alt fa-2x text-primary"></i>
+                        </div>
+                    <% } %>
+                    
+                    <div class="app-info">
+                        <h5 class="app-name"><%= app.getName() %></h5>
+                        <div class="app-meta">
+                            <span class="category-badge"><%= app.getGenre() %></span>
+                            <div class="app-rating">
+                                <i class="fas fa-star text-warning"></i>
+                                <span>4.5</span>
+                            </div>
+                        </div>
+                        <button class="download-btn">
+                            <i class="fas fa-download me-2"></i>Download
+                        </button>
+                    </div>
+                </div>
+            <%
+                }
+            } else {
+            %>
+                <div class="col-12 text-center py-5">
+                    <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">No applications available</h5>
+                </div>
+            <% } %>
         </div>
     </div>
 

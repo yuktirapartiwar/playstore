@@ -8,21 +8,28 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.playstore.UserModule.DTO.ApplicationDTO;
 import com.playstore.UserModule.exception.UserAlreadyExistsException;
 import com.playstore.UserModule.exception.UserNotFoundException;
 import com.playstore.UserModule.exception.UserUpdateFailedException;
 import com.playstore.UserModule.exception.UserDeletionFailedException;
 import com.playstore.UserModule.model.User;
 import com.playstore.UserModule.service.UserService;
+import com.playstore.UserModule.service.ApplicationService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	private ApplicationService applicationService;
 	
 	@GetMapping("/register")
 	public String showRegistrationForm(Model model) {
@@ -80,7 +87,14 @@ public class UserController {
 	public String userHome(Model model, HttpServletRequest request) {
 		HttpSession userSession = request.getSession(false);
 		if (userSession != null && userSession.getAttribute("User") != null) {
-			return "UserHome";
+			try {
+				List<ApplicationDTO> applications = applicationService.getAllVisibleApplications();
+				model.addAttribute("applications", applications);
+				return "UserHome";
+			} catch (Exception e) {
+				model.addAttribute("errorMessage", "Failed to fetch applications");
+				return "UserHome";
+			}
 		}
 		return "redirect:/user/login";
 	}
