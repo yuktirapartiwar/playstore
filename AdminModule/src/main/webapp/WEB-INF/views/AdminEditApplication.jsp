@@ -118,6 +118,27 @@
             font-size: 24px;
             color: var(--primary-color);
         }
+
+        .form-switch {
+            padding-left: 2.5rem;
+        }
+
+        .form-check-input {
+            width: 2.5rem;
+            height: 1.25rem;
+            cursor: pointer;
+            margin-left: 0;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .form-check-label {
+            cursor: pointer;
+            padding-left: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -223,6 +244,21 @@
                     <% } %>
                 </div>
 
+                <div class="mb-3">
+                    <label for="visibility" class="form-label">Visibility</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" 
+                               id="visibility" name="visibility" 
+                               <%= app.getVisibility() ? "checked" : "" %>>
+                        <label class="form-check-label" for="visibility">
+                            <span class="text-success" id="visibilityStatus">
+                                <%= app.getVisibility() ? "Visible" : "Hidden" %>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="form-text">Toggle to control application visibility in the store</div>
+                </div>
+
                 <input type="hidden" name="ownerId" value="<%= app.getOwnerId() %>">
                 <input type="hidden" name="downloadCount" value="<%= app.getDownloadCount() %>">
 
@@ -237,5 +273,18 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Update visibility status text when toggle changes
+        document.getElementById('visibility').addEventListener('change', function() {
+            const statusElement = document.getElementById('visibilityStatus');
+            if (this.checked) {
+                statusElement.textContent = 'Visible';
+                statusElement.className = 'text-success';
+            } else {
+                statusElement.textContent = 'Hidden';
+                statusElement.className = 'text-danger';
+            }
+        });
+    </script>
 </body>
 </html>

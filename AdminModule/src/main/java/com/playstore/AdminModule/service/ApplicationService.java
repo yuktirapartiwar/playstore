@@ -53,4 +53,14 @@ public class ApplicationService {
         String url = applicationServiceUrl + "/api/applications/" + id;
         restTemplate.delete(url);
     }
+
+    public ApplicationDTO updateVisibility(Long id, boolean visibility) {
+        String url = applicationServiceUrl + "/api/applications/" + id + "/visibility?visibility=" + visibility;
+        return restTemplate.exchange(
+            url, 
+            HttpMethod.PUT, 
+            null, 
+            ApplicationDTO.class
+        ).getBody();
+    }
 }

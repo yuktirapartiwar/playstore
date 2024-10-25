@@ -17,6 +17,7 @@ import com.playstore.UserModule.exception.UserDeletionFailedException;
 import com.playstore.UserModule.model.User;
 import com.playstore.UserModule.service.UserService;
 import com.playstore.UserModule.service.ApplicationService;
+import com.playstore.UserModule.service.RatingService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -31,6 +32,9 @@ public class UserController {
 	
 	@Autowired
 	private ApplicationService applicationService;
+	
+	@Autowired
+	private RatingService ratingService;
 	
 	@GetMapping("/register")
 	public String showRegistrationForm(Model model) {

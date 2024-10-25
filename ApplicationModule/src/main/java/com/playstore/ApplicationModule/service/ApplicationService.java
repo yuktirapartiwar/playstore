@@ -65,8 +65,21 @@ public class ApplicationService {
     }
 
     public ApplicationDTO updateApplication(ApplicationDTO applicationDTO) {
-        Application application = convertToEntity(applicationDTO);
-        Application updatedApplication = applicationRepository.save(application);
+        Application existingApplication = applicationRepository.findById(applicationDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Application not found with id: " + applicationDTO.getId()));
+        
+        // Update the existing application's fields
+        existingApplication.setName(applicationDTO.getName());
+        existingApplication.setDescription(applicationDTO.getDescription());
+        existingApplication.setReleaseDate(applicationDTO.getReleaseDate());
+        existingApplication.setVersion(applicationDTO.getVersion());
+        existingApplication.setGenre(applicationDTO.getGenre());
+        existingApplication.setVisibility(applicationDTO.getVisibility());
+        existingApplication.setUrl(applicationDTO.getUrl());
+        existingApplication.setLogoUrl(applicationDTO.getLogoUrl());
+        
+        // Save the updated application
+        Application updatedApplication = applicationRepository.save(existingApplication);
         return convertToDTO(updatedApplication);
     }
 
@@ -95,5 +108,14 @@ public class ApplicationService {
             .orElseThrow(() -> new RuntimeException("Application not found"));
         application.setDownloadCount(application.getDownloadCount() + 1);
         applicationRepository.save(application);
+    }
+
+    public ApplicationDTO updateVisibility(Long id, boolean visibility) {
+        Application existingApplication = applicationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Application not found with id: " + id));
+        
+        existingApplication.setVisibility(visibility);
+        Application updatedApplication = applicationRepository.save(existingApplication);
+        return convertToDTO(updatedApplication);
     }
 }

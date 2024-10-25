@@ -394,7 +394,9 @@
                                             <% } else { %>
                                                 <i class="fas fa-mobile-alt me-2" style="font-size: 24px; color: #1a73e8;"></i>
                                             <% } %>
-                                            <span class="app-name"><%= app.getName() %></span>
+                                            <a href="/admin/application/detail/<%= app.getId() %>" class="app-name text-decoration-none">
+                                                <%= app.getName() %>
+                                            </a>
                                         </div>
                                     </td>
                                     <td><%= app.getVersion() %></td>
@@ -467,5 +469,26 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+    function updateVisibility(appId, isVisible) {
+        fetch('/admin/application/' + appId + '/visibility?visibility=' + isVisible, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to update visibility');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Revert the toggle if there was an error
+            document.getElementById('visibility_' + appId).checked = !isVisible;
+            alert('Failed to update visibility. Please try again.');
+        });
+    }
+    </script>
 </body>
 </html>
