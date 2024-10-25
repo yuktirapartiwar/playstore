@@ -38,20 +38,23 @@ public class ApplicationService {
         return application;
     }
     
-    private ApplicationDTO convertToDTO(Application entity) {
-        return new ApplicationDTO(
-            entity.getId(),
-            entity.getName(),
-            entity.getDescription(),
-            entity.getReleaseDate(),
-            entity.getVersion(),
-            entity.getGenre(),
-            entity.getOwnerId(),
-            entity.getDownloadCount(),
-            entity.getVisibility(),
-            entity.getUrl(),
-            entity.getLogoUrl()
+    private ApplicationDTO convertToDTO(Application application) {
+        ApplicationDTO dto = new ApplicationDTO(
+            application.getId(),
+            application.getName(),
+            application.getDescription(),
+            application.getReleaseDate(),
+            application.getVersion(),
+            application.getGenre(),
+            application.getOwnerId(),
+            application.getDownloadCount(),
+            application.getVisibility(),
+            application.getUrl(),
+            application.getLogoUrl()
         );
+        
+        dto.setAverageRating(application.getAverageRating());
+        return dto;
     }  
 
     public List<ApplicationDTO> getAllApplications() {
@@ -87,7 +90,7 @@ public class ApplicationService {
     }
 
     public void incrementDownloadCount(Long id) {
-        System.out.println("Incrementing download count for application with id: " + id);.
+        System.out.println("Incrementing download count for application with id: " + id);
         Application application = applicationRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Application not found"));
         application.setDownloadCount(application.getDownloadCount() + 1);

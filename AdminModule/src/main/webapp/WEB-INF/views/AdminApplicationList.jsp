@@ -408,10 +408,16 @@
                                     </td>
                                     <td>
                                         <div class="rating">
-                                            <span>5.0</span>
-                                            <div class="stars">
-                                                <i class="fas fa-star"></i>
-                                            </div>
+                                            <% if (app.getAverageRating() != null) { %>
+                                                <span><%= String.format("%.1f", app.getAverageRating()) %></span>
+                                                <div class="stars">
+                                                    <% for (int i = 1; i <= 5; i++) { %>
+                                                        <i class="fas fa-star <%= i <= app.getAverageRating() ? "text-warning" : "text-muted" %>"></i>
+                                                    <% } %>
+                                                </div>
+                                            <% } else { %>
+                                                <span class="text-muted">No ratings</span>
+                                            <% } %>
                                         </div>
                                     </td>
                                     <td>

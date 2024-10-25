@@ -56,128 +56,144 @@ public class Application {
 	@Column(name = "logo_url", columnDefinition = "TEXT")
 	private String logoUrl;
 	
+	@Column(name = "average_rating")
+	private Double averageRating;
+	
 	// Constructors
-		public Application() {
-			this.reviews = new ArrayList<>();
-			this.ratings = new ArrayList<>();
-			this.logoUrl = null;
-		}
+	public Application() {
+		this.reviews = new ArrayList<>();
+		this.ratings = new ArrayList<>();
+		this.logoUrl = null;
+		this.averageRating = 0.0;
+		this.downloadCount = 0;
+		this.visibility = true;
+	}
 
-		public Application(String name, String description, LocalDate releaseDate, String version, String genre, Long ownerId, String url) {
-			this();
-			this.name = name;
-			this.description = description;
-			this.releaseDate = releaseDate;
-			this.version = version;
-			this.genre = genre;
-			this.ownerId = ownerId;
-			this.url = url;
-		}
+	public Application(String name, String description, LocalDate releaseDate, 
+						String version, String genre, Long ownerId, String url, 
+						String logoUrl, Double averageRating) {
+		this();
+		this.name = name;
+		this.description = description;
+		this.releaseDate = releaseDate;
+		this.version = version;
+		this.genre = genre;
+		this.ownerId = ownerId;
+		this.url = url;
+		this.logoUrl = logoUrl;
+		this.averageRating = averageRating;
+	}
 
-		public Long getId() {
-			return id;
-		}
+	// Getters and Setters
+	public Long getId() {
+		return id;
+	}
 
-		public void setId(Long id) {
-			this.id = id;
-		}
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-		public String getName() {
-			return name;
-		}
+	public String getName() {
+		return name;
+	}
 
-		public void setName(String name) {
-			this.name = name;
-		}
+	public void setName(String name) {
+		this.name = name;
+	}
 
-		public String getDescription() {
-			return description;
-		}
+	public String getDescription() {
+		return description;
+	}
 
-		public void setDescription(String description) {
-			this.description = description;
-		}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-		public LocalDate getReleaseDate() {
-			return releaseDate;
-		}
+	public LocalDate getReleaseDate() {
+		return releaseDate;
+	}
 
-		public void setReleaseDate(LocalDate releaseDate) {
-			this.releaseDate = releaseDate;
-		}
+	public void setReleaseDate(LocalDate releaseDate) {
+		this.releaseDate = releaseDate;
+	}
 
-		public String getVersion() {
-			return version;
-		}
+	public String getVersion() {
+		return version;
+	}
 
-		public void setVersion(String version) {
-			this.version = version;
-		}
+	public void setVersion(String version) {
+		this.version = version;
+	}
 
-		public String getGenre() {
-			return genre;
-		}
+	public String getGenre() {
+		return genre;
+	}
 
-		public void setGenre(String genre) {
-			this.genre = genre;
-		}
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
 
-		public Long getOwnerId() {
-			return ownerId;
-		}
+	public Long getOwnerId() {
+		return ownerId;
+	}
 
-		public void setOwnerId(Long ownerId) {
-			this.ownerId = ownerId;
-		}
+	public void setOwnerId(Long ownerId) {
+		this.ownerId = ownerId;
+	}
 
-		public Integer getDownloadCount() {
-			return downloadCount;
-		}
+	public Integer getDownloadCount() {
+		return downloadCount;
+	}
 
-		public void setDownloadCount(Integer downloadCount) {
-			this.downloadCount = downloadCount;
-		}
+	public void setDownloadCount(Integer downloadCount) {
+		this.downloadCount = downloadCount;
+	}
 
-		public Boolean getVisibility() {
-			return visibility;
-		}
+	public Boolean getVisibility() {
+		return visibility;
+	}
 
-		public void setVisibility(Boolean visibility) {
-			this.visibility = visibility;
-		}
+	public void setVisibility(Boolean visibility) {
+		this.visibility = visibility;
+	}
 
-		public List<Review> getReviews() {
-			return reviews;
-		}
+	public List<Review> getReviews() {
+		return reviews;
+	}
 
-		public void setReviews(List<Review> reviews) {
-			this.reviews = reviews;
-		}
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
 
-		public List<Rating> getRatings() {
-			return ratings;
-		}
+	public List<Rating> getRatings() {
+		return ratings;
+	}
 
-		public void setRatings(List<Rating> ratings) {
-			this.ratings = ratings;
-		}
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
+	}
 
-		public String getUrl() {
-			return url;
-		}
+	public String getUrl() {
+		return url;
+	}
 
-		public void setUrl(String url) {
-			this.url = url;
-		}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-		public String getLogoUrl() {
-			return logoUrl;
-		}
+	public String getLogoUrl() {
+		return logoUrl;
+	}
 
-		public void setLogoUrl(String logoUrl) {
-			this.logoUrl = logoUrl;
-		}
-		
-		
+	public void setLogoUrl(String logoUrl) {
+		this.logoUrl = logoUrl;
+	}
 
+	public Double getAverageRating() {
+		return averageRating;
+	}
+
+	public void setAverageRating(Double averageRating) {
+		this.averageRating = averageRating;
+	}
 }

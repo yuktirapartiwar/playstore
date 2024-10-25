@@ -11,6 +11,7 @@ import com.playstore.UserModule.DTO.ApplicationDTO;
 import com.playstore.UserModule.DTO.ReviewDTO;
 import com.playstore.UserModule.service.ApplicationService;
 import com.playstore.UserModule.service.ReviewService;
+import com.playstore.UserModule.service.RatingService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +27,9 @@ public class UserApplicationController {
     
     @Autowired
     private ReviewService reviewService;
+    
+    @Autowired
+    private RatingService ratingService;
 
     @GetMapping("/{id}")
     public String viewApplication(@PathVariable Long id, Model model, HttpServletRequest request) {
@@ -35,11 +39,17 @@ public class UserApplicationController {
                 ApplicationDTO application = applicationService.getApplicationById(id);
                 List<ReviewDTO> reviews = reviewService.getApplicationReviews(id);
                 
+                Double avgRating = ratingService.getAverageRating(id);
+                if (avgRating != null) {
+                    model.addAttribute("averageRating", avgRating);
+                }
+                
                 model.addAttribute("application", application);
                 model.addAttribute("reviews", reviews);
                 return "UserApplicationDetail";
             } catch (Exception e) {
-                return "redirect:/user/home?error=true";
+                e.printStackTrace();
+                // return "redirect:/user/home?error=true";
             }
         }
         return "redirect:/user/login";

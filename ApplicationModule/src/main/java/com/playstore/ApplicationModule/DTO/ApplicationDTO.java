@@ -14,6 +14,7 @@ public class ApplicationDTO {
     private Boolean visibility;
     private String url;
     private String logoUrl;
+    private Double averageRating;
 	public ApplicationDTO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -98,6 +99,12 @@ public class ApplicationDTO {
 	}
 	public void setLogoUrl(String logoUrl) {
 		this.logoUrl = logoUrl;
+	}
+	public Double getAverageRating() {
+		return averageRating;
+	}
+	public void setAverageRating(Double averageRating) {
+		this.averageRating = averageRating;
 	}
     
     

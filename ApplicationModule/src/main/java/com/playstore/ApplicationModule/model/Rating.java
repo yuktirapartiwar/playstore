@@ -19,7 +19,7 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "application_id", nullable = false)
     private Application application;
 
@@ -38,7 +38,6 @@ public class Rating {
 	}
 
 	public Rating(Application application, Long userId, LocalDateTime ratingDate, Integer ratingValue) {
-		super();
 		this.application = application;
 		this.userId = userId;
 		this.ratingDate = ratingDate;

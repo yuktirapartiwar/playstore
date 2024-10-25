@@ -121,6 +121,28 @@
             background-color: #218838;
             color: white;
         }
+        
+        .app-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .app-rating .stars {
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .app-rating .stars i {
+            font-size: 0.9rem;
+            margin-right: 1px;
+        }
+        
+        .app-rating .rating-value {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -175,8 +197,17 @@
                         <div class="app-meta">
                             <span class="category-badge"><%= app.getGenre() %></span>
                             <div class="app-rating">
-                                <i class="fas fa-star text-warning"></i>
-                                <span>4.5</span>
+                                <% Double avgRating = (Double) request.getAttribute("averageRating_" + app.getId()); %>
+                                <% if (avgRating != null) { %>
+                                    <span class="stars">
+                                        <% for (int i = 1; i <= 5; i++) { %>
+                                            <i class="fas fa-star <%= i <= avgRating ? "text-warning" : "text-muted" %>"></i>
+                                        <% } %>
+                                    </span>
+                                    <span class="rating-value">(<%= String.format("%.1f", avgRating) %>)</span>
+                                <% } else { %>
+                                    <span class="text-muted small">No ratings</span>
+                                <% } %>
                             </div>
                         </div>
                         <button class="download-btn">

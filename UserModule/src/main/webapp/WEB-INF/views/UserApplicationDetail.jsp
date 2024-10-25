@@ -101,6 +101,53 @@ body {
     max-width: 90%;
     width: 400px;
 }
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    cursor: pointer;
+    font-size: 25px;
+    color: #ddd;
+    padding: 5px;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+    color: #ffc107;
+}
+
+.rating-form {
+    max-width: 300px;
+    margin: 0 auto;
+    text-align: center;
+}
+.rating-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.rating-display .stars {
+    color: #ffc107;
+}
+
+.rating-value {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.stars i {
+    font-size: 1rem;
+    margin-right: 2px;
+}
 </style>
 </head>
 <body>
@@ -145,7 +192,21 @@ body {
             <% } %>
             <div class="app-info">
                 <h1><%= app.getName() %></h1>
-                <span class="genre-badge"><%= app.getGenre() %></span>
+                <div class="app-meta d-flex align-items-center gap-3">
+                    <span class="genre-badge"><%= app.getGenre() %></span>
+                    <div class="rating-display">
+                        <% if (app.getAverageRating() != null) { %>
+                            <span class="stars">
+                                <% for (int i = 1; i <= 5; i++) { %>
+                                    <i class="fas fa-star <%= i <= app.getAverageRating() ? "text-warning" : "text-muted" %>"></i>
+                                <% } %>
+                            </span>
+                            <span class="rating-value">(<%= String.format("%.1f", app.getAverageRating()) %>)</span>
+                        <% } else { %>
+                            <span class="text-muted">No ratings yet</span>
+                        <% } %>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -207,6 +268,28 @@ body {
             No reviews yet. Be the first to review this application!
         </div>
     <% } %>
+</div>
+
+<div class="rating-section mt-4 mb-4">
+    <h3>Rate this Application</h3>
+    <form action="/user/rating/submit" method="post" class="rating-form">
+        <input type="hidden" name="applicationId" value="<%= app.getId() %>">
+        <div class="star-rating">
+            <input type="radio" id="star5" name="ratingValue" value="5" required>
+            <label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star4" name="ratingValue" value="4">
+            <label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star3" name="ratingValue" value="3">
+            <label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star2" name="ratingValue" value="2">
+            <label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star1" name="ratingValue" value="1">
+            <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">
+            <i class="fas fa-star me-2"></i>Submit Rating
+        </button>
+    </form>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

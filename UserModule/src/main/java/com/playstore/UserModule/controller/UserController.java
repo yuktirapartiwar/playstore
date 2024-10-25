@@ -17,6 +17,7 @@ import com.playstore.UserModule.exception.UserDeletionFailedException;
 import com.playstore.UserModule.model.User;
 import com.playstore.UserModule.service.UserService;
 import com.playstore.UserModule.service.ApplicationService;
+import com.playstore.UserModule.service.RatingService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -31,6 +32,9 @@ public class UserController {
 	
 	@Autowired
 	private ApplicationService applicationService;
+	
+	@Autowired
+	private RatingService ratingService;
 	
 	@GetMapping("/register")
 	public String showRegistrationForm(Model model) {
@@ -90,6 +94,13 @@ public class UserController {
 		if (userSession != null && userSession.getAttribute("User") != null) {
 			try {
 				List<ApplicationDTO> applications = applicationService.getAllVisibleApplications();
+				// Get average rating for each application
+            for (ApplicationDTO app : applications) {
+                Double avgRating = ratingService.getAverageRating(app.getId());
+               if (avgRating != null) {
+                        model.addAttribute("averageRating_" + app.getId(), avgRating);
+                    }
+            }
 				model.addAttribute("applications", applications);
 				return "UserHome";
 			} catch (Exception e) {
