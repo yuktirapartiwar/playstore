@@ -116,4 +116,14 @@ public class ApplicationController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/genre/{genre}")
+    public ResponseEntity<List<ApplicationDTO>> getApplicationsByGenre(@PathVariable String genre) {
+        try {
+            List<ApplicationDTO> applications = applicationService.getApplicationsByGenre(genre);
+            return new ResponseEntity<>(applications, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

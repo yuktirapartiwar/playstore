@@ -123,4 +123,11 @@ public class ApplicationService {
         Application application = applicationRepository.findFirstByNameContainingIgnoreCaseAndVisibilityTrue(name);
         return convertToDTO(application);
     }
+
+    public List<ApplicationDTO> getApplicationsByGenre(String genre) {
+        List<Application> applications = applicationRepository.findByGenreAndVisibilityTrue(genre);
+        return applications.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
 }

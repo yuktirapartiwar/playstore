@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Home - PlayStore</title>
+    <title><%= request.getAttribute("selectedGenre") %> Applications - PlayStore</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
@@ -23,116 +23,71 @@
         body {
             min-height: 100vh;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            /* padding-top: var(--navbar-height); */
         }
 
         .navbar {
             background-color: var(--primary-color);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1030;
             height: var(--navbar-height);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: var(--footer-height);
-            background-color: white;
-            border-top: 1px solid #eee;
+        .page-container {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6c757d;
-            z-index: 10;
+            min-height: calc(100vh - var(--navbar-height));
         }
 
-        .navbar-brand, .nav-link {
-            color: white !important;
+        .sidebar {
+            width: var(--sidebar-width);
+            padding: 1rem;
+            background-color: white;
+            border-right: 1px solid #dee2e6;
         }
-        .container {
-            margin-top: 50px;
-        }
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-        .card-header {
-            background-color: #28a745;
-            color: white;
-            text-align: center;
-            border-radius: 15px 15px 0 0;
-            padding: 20px;
-        }
-        .card-body {
-            padding: 30px;
-        }
-        .btn-primary {
-            background-color: #28a745;
-            border: none;
-        }
-        .btn-primary:hover {
-            background-color: #218838;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px 0;
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
             background-color: #f8f9fa;
-            color: #6c757d;
         }
-        /* Keep existing styles from reference and add: */
+
+        /* Copy all styles from UserHome.jsp */
         .app-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 1.5rem;
-            padding: 1.5rem;
+            padding: 1rem;
         }
-        
+
         .app-card {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            padding: 1.5rem;
-            transition: transform 0.3s ease;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
         }
-        
+
         .app-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        
-        .app-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 15px;
-            object-fit: cover;
-            margin: 0 auto 1rem;
-            display: block;
-        }
-        
+
+        /* Add all other styles from UserHome.jsp */
+
         .app-info {
             text-align: center;
         }
-        
+
         .app-name {
             font-weight: 600;
             color: #333;
             margin-bottom: 0.5rem;
         }
-        
+
         .app-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
         }
-        
+
         .category-badge {
             background-color: #e9ecef;
             color: #495057;
@@ -140,7 +95,7 @@
             border-radius: 6px;
             font-size: 0.8rem;
         }
-        
+
         .details-btn {
             width: 100%;
             background-color: #28a745;
@@ -151,151 +106,41 @@
             font-weight: 500;
             transition: background-color 0.3s ease;
         }
-        
+
         .details-btn:hover {
             background-color: #218838;
             color: white;
         }
-        
+
         .app-rating {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-top: 0.5rem;
         }
-        
-        .app-rating .stars {
-            display: inline-flex;
-            align-items: center;
-        }
-        
-        .app-rating .stars i {
-            font-size: 0.9rem;
-            margin-right: 1px;
-        }
-        
-        .app-rating .rating-value {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-        /* Sidebar and Layout Styles */
-        .page-container {
-            padding-top: var(--navbar-height);
-            min-height: calc(100vh - var(--navbar-height));
-            display: flex;
-        }
-        
-        .sidebar {
-            position: fixed;
-            top: var(--navbar-height);
-            left: 0;
-            width: var(--sidebar-width);
-            height: calc(100vh - var(--navbar-height) - var(--footer-height));
-            overflow-y: auto;
-            background-color: white;
-            border-right: 1px solid #eee;
-            z-index: 1020;
-        }
-        
-        .search-box {
-            padding: 1.25rem 1rem;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .search-input {
-            width: 100%;
-            padding: 0.5rem 1rem;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            color: #333;
-            background-color: #f8f9fa;
-            transition: all 0.3s ease;
-        }
-        
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            background-color: white;
-            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
-        }
-        
-        .menu-title {
-            padding: 0 1rem;
-            margin: 1rem 0 0.5rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #666;
-        }
-        
-        .menu-items {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .menu-items li {
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .menu-items li a {
-            color: inherit;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-        
+
         .menu-items li.active {
-            background-color: var(--primary-color);
-            color: white;
+            background-color: rgba(26, 115, 232, 0.1);
             border-radius: 8px;
         }
-        
-        .menu-items li:hover:not(.active) {
-            background-color: #f8f9fa;
+
+        .menu-items li.active a {
             color: var(--primary-color);
-            border-radius: 8px;
-        }
-        
-        .menu-items li i {
-            width: 20px;
-            text-align: center;
-        }
-        
-        .main-content {
-            flex: 1;
-            margin-left: var(--sidebar-width);
-            padding: 2rem;
-            background-color: #f8f9fa;
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .sidebar {
-                display: none;
-            }
-            
-            .main-content {
-                margin-left: 0;
-            }
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">PlayStore</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="/user/home">PlayStore</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link" href="/user/home">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/user/profile">Profile</a>
@@ -308,17 +153,12 @@
         </div>
     </nav>
 
-    <!-- Add this after the navbar and before the main content -->
     <div class="page-container">
         <!-- Sidebar -->
         <div class="sidebar bg-white border-end">
             <div class="search-box">
                 <form action="/user/application/search" method="get" class="d-flex">
-                    <input type="text" 
-                           name="query" 
-                           class="search-input" 
-                           placeholder="Search applications..." 
-                           required>
+                    <input type="text" name="query" class="search-input" placeholder="Search applications..." required>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-search"></i>
                     </button>
@@ -326,33 +166,41 @@
             </div>
             
             <div class="sidebar-menu">
-                
-                
                 <div class="menu-section">
                     <div class="menu-title">CATEGORIES</div>
                     <ul class="menu-items">
                         <li class="<%= "Games".equals(request.getAttribute("selectedGenre")) ? "active" : "" %>">
-                            <a href="/user/application/genre/Games" class="text-decoration-none">
+                            <a href="/user/application/genre/Games" 
+                               class="text-decoration-none"
+                               onclick="console.log('Games link clicked')">
                                 <i class="fas fa-gamepad"></i>Games
                             </a>
                         </li>
                         <li class="<%= "Beauty".equals(request.getAttribute("selectedGenre")) ? "active" : "" %>">
-                            <a href="/user/application/genre/Beauty" class="text-decoration-none">
+                            <a href="/user/application/genre/Beauty" 
+                               class="text-decoration-none"
+                               onclick="console.log('Beauty link clicked')">
                                 <i class="fas fa-spa"></i>Beauty
                             </a>
                         </li>
                         <li class="<%= "Fashion".equals(request.getAttribute("selectedGenre")) ? "active" : "" %>">
-                            <a href="/user/application/genre/Fashion" class="text-decoration-none">
+                            <a href="/user/application/genre/Fashion" 
+                               class="text-decoration-none"
+                               onclick="console.log('Fashion link clicked')">
                                 <i class="fas fa-tshirt"></i>Fashion
                             </a>
                         </li>
                         <li class="<%= "Women".equals(request.getAttribute("selectedGenre")) ? "active" : "" %>">
-                            <a href="/user/application/genre/Women" class="text-decoration-none">
+                            <a href="/user/application/genre/Women" 
+                               class="text-decoration-none"
+                               onclick="console.log('Women link clicked')">
                                 <i class="fas fa-female"></i>Women
                             </a>
                         </li>
                         <li class="<%= "Health".equals(request.getAttribute("selectedGenre")) ? "active" : "" %>">
-                            <a href="/user/application/genre/Health" class="text-decoration-none">
+                                <a href="/user/application/genre/Health" 
+                               class="text-decoration-none"
+                               onclick="console.log('Health link clicked')">
                                 <i class="fas fa-heartbeat"></i>Health
                             </a>
                         </li>
@@ -364,9 +212,23 @@
         <!-- Main Content -->
         <div class="main-content">
             <div class="container mt-4">
-                <div class="app-grid">
+                <% if (request.getAttribute("errorMessage") != null) { %>
+                    <div class="alert alert-danger">
+                        <%= request.getAttribute("errorMessage") %>
+                    </div>
+                <% } %>
+                
+                <div class="d-flex align-items-center mb-4">
+                    <h2 class="mb-0"><%= request.getAttribute("selectedGenre") %> Applications</h2>
                     <% 
                     List<ApplicationDTO> applications = (List<ApplicationDTO>)request.getAttribute("applications");
+                    if (applications != null) {
+                    %>
+                        <span class="ms-3 badge bg-primary"><%= applications.size() %> apps</span>
+                    <% } %>
+                </div>
+                <div class="app-grid">
+                    <% 
                     if (applications != null && !applications.isEmpty()) {
                         for (ApplicationDTO app : applications) {
                     %>
@@ -392,17 +254,15 @@
                                                 <% } %>
                                             </span>
                                             <span class="rating-value">(<%= String.format("%.1f", avgRating) %>)</span>
-                                        <% } else { %>
-                                            <span class="text-muted small">No ratings</span>
                                         <% } %>
                                     </div>
                                 </div>
-                                <button class="details-btn">
-                                    <i class="fas fa-info-circle me-2"></i>View Details
-                                </button>
                             </div>
+                            <button class="details-btn">
+                                <i class="fas fa-info-circle me-2"></i>View Details
+                            </button>
                         </div>
-                    <%
+                    <% 
                         }
                     } else {
                     %>
@@ -413,47 +273,23 @@
                     <% } %>
                 </div>
             </div>
-
-            <div class="footer">
-                <p>&copy; 2024 PlayStore. All Rights Reserved.</p>
-            </div>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-    // function downloadApplication(url, applicationId) {
-    //     // Open application URL in new tab
-    //     window.open(url, '_blank');
-
-    //     // Make AJAX call to increment download count
-    //     fetch('/api/downloads/' + applicationId, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     })
-    //     .then(response => {
-    //         if (response.ok) {
-    //             // Show success message
-    //             const alertDiv = document.createElement('div');
-    //             alertDiv.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
-    //             alertDiv.innerHTML = `
-    //                 <strong>Success!</strong> Download started successfully.
-    //                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    //             `;
-    //             document.body.appendChild(alertDiv);
-
-    //             // Remove alert after 3 seconds
-    //             setTimeout(() => {
-    //                 alertDiv.remove();
-    //             }, 3000);
-    //         }
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-    // }
+    document.addEventListener('DOMContentLoaded', function() {
+        const mainContent = document.querySelector('.main-content');
+        
+        document.querySelectorAll('.menu-items a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Show loading state
+                mainContent.style.opacity = '0.5';
+                mainContent.style.pointerEvents = 'none';
+                // Let the normal navigation happen
+            });
+        });
+    });
     </script>
 </body>
 </html>

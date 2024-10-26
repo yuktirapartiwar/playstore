@@ -18,6 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
+import java.util.Set;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/user/application")
@@ -77,5 +79,67 @@ public class UserApplicationController {
             }
         }
         return "redirect:/user/login";
+    }
+
+    @GetMapping("/genre/{genre}")
+    public String getApplicationsByGenre(@PathVariable String genre, Model model, HttpServletRequest request) {
+        System.out.println("==================================");
+        System.out.println("Request received for genre: " + genre);
+        System.out.println("Request URI: " + request.getRequestURI());
+        
+        HttpSession session = request.getSession(false);
+        System.out.println("Session exists: " + (session != null));
+        if (session != null) {
+            System.out.println("User in session: " + session.getAttribute("User"));
+        }
+        
+        if (session != null && session.getAttribute("User") != null) {
+            System.out.println("User is authenticated");
+            try {
+                // Get applications for the genre
+                System.out.println("Fetching applications for genre^&^&^&^&: " + genre);
+                List<ApplicationDTO> applications = applicationService.getApplicationsByGenre(genre);
+                System.out.println("Applications found: " + applications.size());
+                
+                // Add ratings
+                for (ApplicationDTO app : applications) {
+                    Double avgRating = ratingService.getAverageRating(app.getId());
+                    if (avgRating != null) {
+                        model.addAttribute("averageRating_" + app.getId(), avgRating);
+                    }
+                }
+                
+                // Add attributes to model
+                model.addAttribute("applications", applications);
+                model.addAttribute("selectedGenre", genre);
+                
+                // Return view name directly without redirect
+                return "UserCategoryPage";
+                
+            } catch (Exception e) {
+                System.out.println("Error occurred: " + e.getMessage());
+                e.printStackTrace();
+                
+                // Add error details to model and return to same page
+                model.addAttribute("errorMessage", "Failed to fetch applications: " + e.getMessage());
+                model.addAttribute("applications", new ArrayList<>()); // Empty list
+                model.addAttribute("selectedGenre", genre);
+                return "UserCategoryPage"; // Stay on same page
+            }
+        }
+        
+        System.out.println("Session validation failed");
+        return "redirect:/user/login";
+    }
+
+    // Add this method to catch any requests to /user/application/**
+    @GetMapping("/**")
+    public String catchAll(HttpServletRequest request) {
+        System.out.println("==================================");
+        System.out.println("Catch-all handler reached");
+        System.out.println("Request URI: " + request.getRequestURI());
+        System.out.println("Request URL: " + request.getRequestURL());
+        System.out.println("==================================");
+        return "redirect:/user/home";
     }
 }
