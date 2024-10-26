@@ -139,9 +139,9 @@ body {
         <div class="collapse navbar-collapse" id="navbarNav">
             <!-- Desktop Menu -->
             <ul class="navbar-nav ms-auto d-none d-lg-flex">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="/admin/home"><i class="fas fa-home me-1"></i>Home</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/application/list"><i class="fas fa-mobile-alt me-1"></i>Applications</a>
                 </li>

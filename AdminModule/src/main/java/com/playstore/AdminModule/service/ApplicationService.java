@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -56,10 +57,15 @@ public class ApplicationService {
 
     public ApplicationDTO updateVisibility(Long id, boolean visibility) {
         String url = applicationServiceUrl + "/api/applications/" + id + "/visibility?visibility=" + visibility;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        
+        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
+        
         return restTemplate.exchange(
             url, 
             HttpMethod.PUT, 
-            null, 
+            requestEntity, 
             ApplicationDTO.class
         ).getBody();
     }

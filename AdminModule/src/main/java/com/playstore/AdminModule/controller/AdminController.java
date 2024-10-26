@@ -62,10 +62,10 @@ public class AdminController {
 			Admin loggedInAdmin = adminService.login(admin.getEmail(), admin.getPassword());
 			HttpSession session = request.getSession();
 			session.setAttribute("Admin", loggedInAdmin);
-			return "redirect:/admin/home";
+			return "redirect:/admin/application/list";
 		} catch (AdminNotFoundException e) {
 			model.addAttribute("errorMessage", e.getMessage());
-			return "AdminLogin";
+			return "AdminApplicationList";
 		}
 	}
 
@@ -81,18 +81,18 @@ public class AdminController {
 		
 	}
 
-	@GetMapping("/home")
-	public String adminHome(Model model, HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			Admin admin = (Admin) session.getAttribute("Admin");
-			if (admin != null) {
-//				model.addAttribute("adminName", admin.getUsername());
-				return "AdminHome";
-			}
-		}
-		return "redirect:/admin/login";
-	}
+// 	@GetMapping("/home")
+// 	public String adminHome(Model model, HttpServletRequest request) {
+// 		HttpSession session = request.getSession(false);
+// 		if (session != null) {
+// 			Admin admin = (Admin) session.getAttribute("Admin");
+// 			if (admin != null) {
+// //				model.addAttribute("adminName", admin.getUsername());
+// 				return "AdminHome";
+// 			}
+// 		}
+// 		return "redirect:/admin/login";
+// 	}
 
 	@GetMapping("/profile")
 	public String viewProfile(Model model, HttpServletRequest request) {

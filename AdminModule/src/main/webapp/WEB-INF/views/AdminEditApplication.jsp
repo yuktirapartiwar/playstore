@@ -155,9 +155,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="/admin/home"><i class="fas fa-home me-1"></i>Home</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link active" href="/admin/application/list"><i class="fas fa-mobile-alt me-1"></i>Applications</a>
                     </li>
@@ -244,7 +244,7 @@
                     <% } %>
                 </div>
 
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label for="visibility" class="form-label">Visibility</label>
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" 
@@ -257,7 +257,7 @@
                         </label>
                     </div>
                     <div class="form-text">Toggle to control application visibility in the store</div>
-                </div>
+                </div> -->
 
                 <input type="hidden" name="ownerId" value="<%= app.getOwnerId() %>">
                 <input type="hidden" name="downloadCount" value="<%= app.getDownloadCount() %>">
@@ -272,8 +272,8 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+    <!-- <script>
         // Update visibility status text when toggle changes
         document.getElementById('visibility').addEventListener('change', function() {
             const statusElement = document.getElementById('visibilityStatus');
@@ -285,6 +285,6 @@
                 statusElement.className = 'text-danger';
             }
         });
-    </script>
+    </script> -->
 </body>
 </html>

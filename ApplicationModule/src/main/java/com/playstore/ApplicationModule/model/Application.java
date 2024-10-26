@@ -41,7 +41,7 @@ public class Application {
 	@Column(name = "download_count")
 	private Integer downloadCount = 0;
 
-	@Column(name = "visibility")
+	@Column(name = "visibility", nullable = false)
 	private Boolean visibility = true;
 
 	@OneToMany(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)

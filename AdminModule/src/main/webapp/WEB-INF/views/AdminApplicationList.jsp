@@ -18,7 +18,6 @@
             --warning-color: #fbbc05;
             --navbar-height: 60px;
             --footer-height: 56px;
-            --sidebar-width: 250px;
         }
 
         /* Base Layout Styles */
@@ -48,88 +47,9 @@
             z-index: 1030;
         }
 
-        /* Sidebar Styles */
-        .sidebar {
-            position: fixed;
-            top: var(--navbar-height);
-            left: 0;
-            width: var(--sidebar-width);
-            height: calc(100vh - var(--navbar-height) - var(--footer-height));
-            overflow-y: auto;
-            display: none;  /* Hide on mobile */
-        }
-
-        .search-box {
-            padding: 1.25rem 1rem;
-            border-bottom: 1px solid #eee;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 0.5rem 1rem;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            color: #333;
-            background-color: #f8f9fa;
-            transition: all 0.3s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            background-color: white;
-            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
-        }
-
-        .search-input::placeholder {
-            color: #999;
-            font-size: 0.9rem;
-        }
-
-        .sidebar-menu {
-            padding: 1rem 0;
-        }
-
-        .menu-title {
-            padding: 0 1rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #666;
-        }
-
-        .menu-items {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .menu-items li {
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            color: #333;
-        }
-
-        .menu-items li:hover {
-            background-color: #f8f9fa;
-            color: var(--primary-color);
-        }
-
-        .menu-items li i {
-            width: 20px;
-            margin-right: 10px;
-            font-size: 1rem;
-        }
-
         /* Main Content Styles */
         .main-content {
             flex: 1;
-            margin-left: var(--sidebar-width);
             padding: 2rem;
             background-color: #f8f9fa;
         }
@@ -274,10 +194,6 @@
 
         /* Responsive Design */
         @media (max-width: 991px) {
-            .sidebar {
-                display: none;
-            }
-
             .main-content {
                 margin-left: 0;
             }
@@ -306,9 +222,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <!-- Desktop Menu -->
                 <ul class="navbar-nav ms-auto d-none d-lg-flex">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="/admin/home"><i class="fas fa-home me-1"></i>Home</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/application/list"><i class="fas fa-mobile-alt me-1"></i>Applications</a>
                     </li>
@@ -324,33 +240,6 @@
     </nav>
 
     <div class="page-container">
-        <!-- Sidebar -->
-        <div class="sidebar d-none d-lg-block">
-            <div class="search-box">
-                <input type="text" class="search-input" placeholder="Search applications...">
-            </div>
-            <div class="sidebar-menu">
-                <div class="menu-title">Categories</div>
-                <ul class="menu-items">
-                    <li>
-                        <i class="fas fa-gamepad"></i>Games
-                    </li>
-                    <li>
-                        <i class="fas fa-spa"></i>Beauty
-                    </li>
-                    <li>
-                        <i class="fas fa-tshirt"></i>Fashion
-                    </li>
-                    <li>
-                        <i class="fas fa-female"></i>Women
-                    </li>
-                    <li>
-                        <i class="fas fa-heartbeat"></i>Health
-                    </li>
-                </ul>
-            </div>
-        </div>
-
         <!-- Main Content -->
         <div class="main-content">
             <!-- Add New Application Button -->
