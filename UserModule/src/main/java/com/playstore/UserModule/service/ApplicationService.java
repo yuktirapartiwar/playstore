@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriUtils;
 
 import com.playstore.UserModule.DTO.ApplicationDTO;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,5 +37,11 @@ public class ApplicationService {
     public void incrementDownloadCount(Long id) {
         String url = applicationServiceUrl + "/api/applications/" + id + "/download";
         restTemplate.postForObject(url, null, Void.class);
+    }
+
+    public ApplicationDTO searchApplicationsByName(String query) {
+        String url = applicationServiceUrl + "/api/applications/search?name=" + query;
+        ResponseEntity<ApplicationDTO> response = restTemplate.getForEntity(url, ApplicationDTO.class);
+        return response.getBody();
     }
 }

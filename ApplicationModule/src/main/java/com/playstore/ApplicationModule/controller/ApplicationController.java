@@ -106,4 +106,14 @@ public class ApplicationController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<ApplicationDTO> searchApplications(@RequestParam String name) {
+        try {
+            ApplicationDTO application = applicationService.searchApplicationsByName(name);
+            return new ResponseEntity<>(application, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

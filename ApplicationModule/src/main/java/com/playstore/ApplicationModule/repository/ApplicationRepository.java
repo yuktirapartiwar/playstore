@@ -9,4 +9,5 @@ import com.playstore.ApplicationModule.model.Application;
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     List<Application> findByVisibilityTrue();
+    Application findFirstByNameContainingIgnoreCaseAndVisibilityTrue(String name);
 }

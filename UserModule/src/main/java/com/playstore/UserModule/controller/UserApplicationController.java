@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.playstore.UserModule.DTO.ApplicationDTO;
 import com.playstore.UserModule.DTO.ReviewDTO;
@@ -50,6 +51,29 @@ public class UserApplicationController {
             } catch (Exception e) {
                 e.printStackTrace();
                 // return "redirect:/user/home?error=true";
+            }
+        }
+        return "redirect:/user/login";
+    }
+
+    @GetMapping("/search")
+    public String searchApplications(@RequestParam String query, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("User") != null) {
+            try {
+                ApplicationDTO searchResult = applicationService.searchApplicationsByName(query);
+                
+                if (searchResult != null) {
+                    return "redirect:/user/application/" + searchResult.getId();
+                }
+                
+                // If no result found, return to home page
+                model.addAttribute("errorMessage", "No applications found matching your search.");
+                return "redirect:/user/home";
+                
+            } catch (Exception e) {
+                model.addAttribute("errorMessage", "Failed to search applications: " + e.getMessage());
+                return "redirect:/user/home";
             }
         }
         return "redirect:/user/login";

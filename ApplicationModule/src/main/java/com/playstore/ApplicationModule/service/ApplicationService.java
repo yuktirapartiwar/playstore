@@ -118,4 +118,9 @@ public class ApplicationService {
         Application updatedApplication = applicationRepository.save(existingApplication);
         return convertToDTO(updatedApplication);
     }
+
+    public ApplicationDTO searchApplicationsByName(String name) {
+        Application application = applicationRepository.findByNameContainingIgnoreCaseAndVisibilityTrue(name);
+        return convertToDTO(application);
+    }
 }

@@ -292,12 +292,6 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">My Apps</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Browse</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="/user/profile">Profile</a>
                     </li>
                     <li class="nav-item">
@@ -313,7 +307,16 @@
         <!-- Sidebar -->
         <div class="sidebar bg-white border-end">
             <div class="search-box">
-                <input type="text" class="search-input" placeholder="Search applications...">
+                <form action="/user/application/search" method="get" class="d-flex">
+                    <input type="text" 
+                           name="query" 
+                           class="search-input" 
+                           placeholder="Search applications..." 
+                           required>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
             </div>
             
             <div class="sidebar-menu">
@@ -345,8 +348,6 @@
         <!-- Main Content -->
         <div class="main-content">
             <div class="container mt-4">
-                <h2 class="mb-4">Featured Applications</h2>
-                
                 <div class="app-grid">
                     <% 
                     List<ApplicationDTO> applications = (List<ApplicationDTO>)request.getAttribute("applications");
