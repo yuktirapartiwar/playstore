@@ -120,7 +120,7 @@ public class ApplicationService {
     }
 
     public ApplicationDTO searchApplicationsByName(String name) {
-        Application application = applicationRepository.findByNameContainingIgnoreCaseAndVisibilityTrue(name);
+        Application application = applicationRepository.findFirstByNameContainingIgnoreCaseAndVisibilityTrue(name);
         return convertToDTO(application);
     }
 }
