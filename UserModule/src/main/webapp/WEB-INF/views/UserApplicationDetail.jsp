@@ -368,7 +368,7 @@ function downloadApplication(url, applicationId) {
     const alertDiv = document.createElement('div');
     alertDiv.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
     alertDiv.innerHTML = `
-        <strong>Success!</strong> Your download will begin shortly.
+        <strong>Success!</strong> Download completed.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     `;
     document.body.appendChild(alertDiv);

@@ -133,25 +133,20 @@
     <!-- Navbar with icons -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-play-circle me-2"></i>PlayStore
-            </a>
+            <a class="navbar-brand" href="/user/home">PlayStore</a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/home"><i class="fas fa-home me-1"></i>Home</a>
+                        <a class="nav-link" href="/user/home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-mobile-alt me-1"></i>My Apps</a>
+                        <a class="nav-link active" aria-current="page" href="#">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/user/profile"><i class="fas fa-user me-1"></i>Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/logout"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
+                        <a class="nav-link" href="/user/logout">Logout</a>
                     </li>
                 </ul>
             </div>

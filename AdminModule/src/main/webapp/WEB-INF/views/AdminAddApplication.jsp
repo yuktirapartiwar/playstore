@@ -130,26 +130,21 @@ body {
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <i class="fas fa-play-circle me-2"></i>PlayStore
-        </a>
+        <a class="navbar-brand" href="/admin/application/list">PlayStore</a>
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <!-- Desktop Menu -->
             <ul class="navbar-nav ms-auto d-none d-lg-flex">
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="/admin/home"><i class="fas fa-home me-1"></i>Home</a>
-                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/application/list"><i class="fas fa-mobile-alt me-1"></i>Applications</a>
+                    <a class="nav-link" href="/admin/application/list">Applications</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/profile"><i class="fas fa-user me-1"></i>Profile</a>
+                    <a class="nav-link" href="/admin/profile">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/logout"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
+                    <a class="nav-link" href="/admin/logout">Logout</a>
                 </li>
             </ul>
         </div>

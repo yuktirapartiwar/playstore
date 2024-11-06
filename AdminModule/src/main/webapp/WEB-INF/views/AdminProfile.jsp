@@ -220,25 +220,20 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-play-circle me-2"></i>PlayStore
-            </a>
+            <a class="navbar-brand" href="/admin/application/list">PlayStore</a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="/admin/home"><i class="fas fa-home me-1"></i>Home</a>
-                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/application/list"><i class="fas fa-mobile-alt me-1"></i>Applications</a>
+                        <a class="nav-link" href="/admin/application/list"></i>Applications</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/admin/profile"><i class="fas fa-user me-1"></i>Profile</a>
+                        <a class="nav-link active" aria-current="page" href="#"></i>Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/logout"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
+                        <a class="nav-link" href="/admin/logout"></i>Logout</a>
                     </li>
                 </ul>
             </div>
@@ -266,52 +261,32 @@
 
             <form id="profileForm" action="/admin/profile/update" method="post">
                 <% Admin admin = (Admin)request.getSession(false).getAttribute("Admin"); %>
-                
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="username" class="form-label required-field">Username</label>
+                    <div class="form-group">
+                        <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" name="username" 
                                value="<%=admin.getUsername()%>" readonly>
                     </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label for="email" class="form-label required-field">Email</label>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" name="email" 
                                value="<%=admin.getEmail()%>" readonly>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <input type="text" class="form-control" id="role" name="role" 
-                               value="<%=admin.getRole()%>" readonly>
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" 
+                                value="<%=admin.getPassword()%>" readonly>
                     </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label for="password" class="form-label required-field">Password</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control" id="password" name="password" 
-                                   value="<%=admin.getPassword()%>" readonly>
-                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-4 d-flex justify-content-between align-items-center">
-                    <div>
-                        <button type="button" class="btn btn-cancel me-2" id="editBtn">
+                <div class="action-buttons">
+                        <button type="button" class="btn btn-primary" id="editBtn">
                             <i class="fas fa-edit me-2"></i>Edit Profile
                         </button>
-                        <button type="submit" class="btn btn-submit" id="saveBtn" style="display:none;">
+                        <button type="submit" class="btn btn-success" id="saveBtn" style="display:none;">
                             <i class="fas fa-save me-2"></i>Save Changes
                         </button>
-                    </div>
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                        <i class="fas fa-trash-alt me-2"></i>Delete Account
-                    </button>
+                        <a href="/user/profile/delete" class="btn btn-danger">
+                            <i class="fas fa-trash-alt me-2"></i>Delete Account
+                        </a>
                 </div>
             </form>
         </div>
@@ -339,27 +314,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.getElementById('editBtn').addEventListener('click', function() {
-            document.getElementById('username').readOnly = false;
             document.getElementById('email').readOnly = false;
             document.getElementById('password').readOnly = false;
             document.getElementById('editBtn').style.display = 'none';
-            document.getElementById('saveBtn').style.display = 'inline-flex';
+            document.getElementById('saveBtn').style.display = 'block';
         });
 
-        document.getElementById('togglePassword').addEventListener('click', function() {
-            const passwordInput = document.getElementById('password');
-            const icon = this.querySelector('i');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        });
     </script>
 </body>
 </html>

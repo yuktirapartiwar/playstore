@@ -35,6 +35,10 @@
             z-index: 1030;
             height: var(--navbar-height);
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
         }
 
         .footer {
@@ -178,36 +182,24 @@
             color: #6c757d;
             font-size: 0.9rem;
         }
-        /* Sidebar and Layout Styles */
-        .page-container {
-            padding-top: var(--navbar-height);
-            min-height: calc(100vh - var(--navbar-height));
-            display: flex;
-        }
-        
-        .sidebar {
-            position: fixed;
-            top: var(--navbar-height);
-            left: 0;
-            width: var(--sidebar-width);
-            height: calc(100vh - var(--navbar-height) - var(--footer-height));
-            overflow-y: auto;
-            background-color: white;
-            border-right: 1px solid #eee;
-            z-index: 1020;
-        }
-        
+       
         .search-box {
-            padding: 1.25rem 1rem;
-            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            margin: 0 auto;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
         }
         
         .search-input {
             width: 100%;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1rem;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: #333;
             background-color: #f8f9fa;
             transition: all 0.3s ease;
@@ -220,55 +212,9 @@
             box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
         }
         
-        .menu-title {
-            padding: 0 1rem;
-            margin: 1rem 0 0.5rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #666;
-        }
-        
-        .menu-items {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .menu-items li {
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .menu-items li a {
-            color: inherit;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-        
-        .menu-items li.active {
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 8px;
-        }
-        
-        .menu-items li:hover:not(.active) {
-            background-color: #f8f9fa;
-            color: var(--primary-color);
-            border-radius: 8px;
-        }
-        
-        .menu-items li i {
-            width: 20px;
-            text-align: center;
-        }
-        
         .main-content {
-            flex: 1;
-            margin-left: var(--sidebar-width);
+            height: calc(100vh - var(--navbar-height));
+            width: 100%;
             padding: 2rem;
             background-color: #f8f9fa;
         }
@@ -293,6 +239,20 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="mx-auto">
+                    <div class="search-box">
+                        <form action="/user/application/search" method="get" class="d-flex">
+                            <input type="text" 
+                                   name="query" 
+                                   class="search-input" 
+                                   placeholder="Search applications..." 
+                                   required>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
@@ -308,9 +268,9 @@
         </div>
     </nav>
 
-    <!-- Add this after the navbar and before the main content -->
+    <!-- Add this after the navbar and before the main content
     <div class="page-container">
-        <!-- Sidebar -->
+        Sidebar
         <div class="sidebar bg-white border-end">
             <div class="search-box">
                 <form action="/user/application/search" method="get" class="d-flex">
@@ -323,9 +283,9 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
-            </div>
+            </div> -->
             
-            <div class="sidebar-menu">
+            <!-- <div class="sidebar-menu">
                 
                 
                 <div class="menu-section">
@@ -359,7 +319,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Main Content -->
         <div class="main-content">

@@ -60,7 +60,7 @@ public class ApplicationController {
             
             try {
                 applicationService.addApplication(applicationDTO);
-                return "redirect:/admin/home";
+                return "redirect:/admin/application/list";
             } catch (Exception e) {
                 model.addAttribute("errorMessage", "Failed to add application: " + e.getMessage());
                 return "AdminAddApplication";
@@ -88,7 +88,7 @@ public class ApplicationController {
                 return "AdminApplicationList";
             } catch (Exception e) {
                 model.addAttribute("errorMessage", "Failed to fetch applications: " + e.getMessage());
-                return "AdminHome";
+                return "AdminApplicationList";
             }
         }
         return "redirect:/admin/login";

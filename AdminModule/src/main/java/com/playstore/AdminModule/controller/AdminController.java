@@ -76,23 +76,22 @@ public class AdminController {
 			session.invalidate();
 			return "redirect:/admin/login";
 		} else {
-			return "AdminHome";
+			return "AdminApplicationList";
 		}
 		
 	}
 
-// 	@GetMapping("/home")
-// 	public String adminHome(Model model, HttpServletRequest request) {
-// 		HttpSession session = request.getSession(false);
-// 		if (session != null) {
-// 			Admin admin = (Admin) session.getAttribute("Admin");
-// 			if (admin != null) {
-// //				model.addAttribute("adminName", admin.getUsername());
-// 				return "AdminHome";
-// 			}
-// 		}
-// 		return "redirect:/admin/login";
-// 	}
+	@GetMapping("/home")
+	public String adminHome(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			Admin admin = (Admin) session.getAttribute("Admin");
+			if (admin != null) {
+				return "AdminApplicationList";
+			}
+		}
+		return "redirect:/admin/login";
+	}
 
 	@GetMapping("/profile")
 	public String viewProfile(Model model, HttpServletRequest request) {

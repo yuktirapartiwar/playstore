@@ -28,7 +28,7 @@
                             request.getAttribute("path") : request.getRequestURI() %>
                     </small>
                 </p>
-                <a href="/admin/home" class="btn btn-primary">
+                <a href="/admin/application/list" class="btn btn-primary">
                     <i class="fas fa-home"></i> Return to Home
                 </a>
             </div>
